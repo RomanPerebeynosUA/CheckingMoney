@@ -50,7 +50,8 @@ namespace IdentityServer
                     AllowedGrantTypes = GrantTypes.Code,
                  
                     //потрібно змінити відповідно до localhost 
-                                RedirectUris = { "https://localhost:44328/signin-oidc" },
+                            RedirectUris = { "https://localhost:44328/signin-oidc" },
+                            PostLogoutRedirectUris = { "https://localhost:44328/Home/Index" },
 
                     AllowedScopes = {
                         IdentityServer4.IdentityServerConstants.StandardScopes.OpenId,

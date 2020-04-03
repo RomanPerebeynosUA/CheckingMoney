@@ -24,6 +24,11 @@ namespace AuditingMoneyClient.Controllers
             return View();
         }
 
+        public IActionResult Logout()
+        {
+            return SignOut("Cookie", "oidc");
+        }
+
         [Authorize]
         public IActionResult Secret()
         {
