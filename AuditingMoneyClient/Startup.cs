@@ -52,7 +52,6 @@ namespace AuditingMoneyClient
                   //but the id token is smaller !
                   //config.GetClaimsFromUserInfoEndpoint = true;
               });
-
             services.AddHttpClient();
             services.AddControllersWithViews();
         }

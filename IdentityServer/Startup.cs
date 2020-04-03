@@ -65,6 +65,13 @@ namespace IdentityServer
                   })
                 .AddDeveloperSigningCredential(); // create server key 
 
+            services.AddAuthentication()
+            .AddFacebook(config =>
+            {
+                config.AppId = "607059936544868";
+                config.AppSecret = "secret";
+           //     config.CallbackPath = "https://localhost:44393/singIn-facebook";
+            });
             services.AddControllersWithViews();
         }
 
