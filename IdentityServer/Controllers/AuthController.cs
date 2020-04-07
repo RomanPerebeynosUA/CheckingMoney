@@ -26,10 +26,10 @@ namespace IdentityServer.Controllers
             _interactionService = interactionService;
         }
         [HttpGet]
-        public async Task<IActionResult> Logout(string logout)
+        public async Task<IActionResult> Logout(string logoutId) // the name of (logout string) mast be a loguotId
         {
             await _signInManager.SignOutAsync();
-            var logoutRequest = await _interactionService.GetLogoutContextAsync(logout);
+            var logoutRequest = await _interactionService.GetLogoutContextAsync(logoutId);
             if (string.IsNullOrEmpty(logoutRequest.PostLogoutRedirectUri))
             {
                 return RedirectToAction("Index", "Home");

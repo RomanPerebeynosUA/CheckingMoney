@@ -90,6 +90,8 @@ namespace IdentityServer
             {
                 serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
 
+                serviceScope.ServiceProvider.GetRequiredService<AppDbContext>().Database.Migrate(); // automatic migration
+
                 var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
                 context.Database.Migrate();
 
