@@ -21,16 +21,9 @@ namespace AuditingMoneyClient.Models.Entity.IncomeEntity
         public int CashAccount_Id { get; set; }
         public CashAccount CashAccount { get; set; }
 
-
         /// <summary>
-        /// many to many connection 
+        /// one to many connection 
         /// </summary>
-        public List<Income_IncomeCategory> Income_IncomeCategories { get; set; }
-
-        public Income()
-        {
-            Income_IncomeCategories = new List<Income_IncomeCategory>();
-        }
-
+        public List<IncomeCategory> IncomeCategories { get; set; }
     }
 }

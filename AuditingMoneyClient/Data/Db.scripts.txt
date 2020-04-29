@@ -1,0 +1,2 @@
+﻿dotnet ef migrations add AudDbContextMigration -c AudDbContext -o Data/Migrations/AudDbMigrations
+dotnet ef database update -c AudDbContext

@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AuditingMoneyClient.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,16 +16,20 @@ namespace AuditingMoneyClient
 
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IConfiguration _config;
+        public Startup(IConfiguration config)
         {
-            Configuration = configuration;
+            _config = config;
         }
-
-        public IConfiguration Configuration { get; }
-
        
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = _config.GetConnectionString("DefaultConnection");
+            services.AddDbContext<AudDbContext>(config =>
+            {
+                config.UseSqlServer(connectionString);
+            });
+
             services.AddAuthentication(config =>
             {
                 config.DefaultScheme = "Cookie";
@@ -76,6 +82,14 @@ namespace AuditingMoneyClient
 
             app.UseAuthorization();
 
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+               // automatic migration
+                var context = serviceScope.ServiceProvider.GetRequiredService<AudDbContext>();
+                context.Database.Migrate();
+
+                //ConfigDatabase.Initilize(context);
+            }
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();

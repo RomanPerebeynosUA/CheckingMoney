@@ -13,13 +13,9 @@ namespace AuditingMoneyClient.Models.Entity.IncomeEntity
 
 
         /// <summary>
-        /// many to many connection 
+        /// one to many connection 
         /// </summary>
-        public List<Income_IncomeCategory> Income_IncomeCategories { get; set; }
-
-        public IncomeCategory()
-        {
-            Income_IncomeCategories = new List<Income_IncomeCategory>();
-        }
+        public int Income_Id { get; set; }
+        public Income Income { get; set; }
     }
 }

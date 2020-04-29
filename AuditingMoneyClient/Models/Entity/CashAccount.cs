@@ -1,11 +1,12 @@
 ﻿using AuditingMoneyClient.Models.Entity.BalanceEntity;
 using AuditingMoneyClient.Models.Entity.ExpensesEntity;
 using AuditingMoneyClient.Models.Entity.IncomeEntity;
+using AuditingMoneyClient.Models.Entity.TransferEntity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+ 
 namespace AuditingMoneyClient.Models.Entity
 {
     public class CashAccount
@@ -17,7 +18,6 @@ namespace AuditingMoneyClient.Models.Entity
         public double Amount { get; set; }
 
         public string Note { get; set; }
-
 
         /// <summary>
         /// one to many connection 
@@ -36,6 +36,17 @@ namespace AuditingMoneyClient.Models.Entity
         /// one to many connection 
         /// </summary>
         public List<Expenses> ListExpenses { get; set; }
+
+
+        /// <summary>
+        /// one to many connection 
+        /// </summary>
+        public List<TransferFrom> TransfersFrom { get; set; }
+
+        /// <summary>
+        /// one to many connection 
+        /// </summary>
+        public List<TransferTo> TransfersTo { get; set; }
 
     }
 }

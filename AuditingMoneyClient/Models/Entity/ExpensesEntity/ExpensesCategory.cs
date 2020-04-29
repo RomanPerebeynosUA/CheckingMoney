@@ -13,13 +13,11 @@ namespace AuditingMoneyClient.Models.Entity.ExpensesEntity
 
 
         /// <summary>
-        /// many to many connection 
+        /// one to many connection 
         /// </summary>
-        public List<Expenses_ExpensesCategory> Expenses_ExpensesCategories { get; set; }
+        public int Id_Expenses { get; set; }
+        public  Expenses Expenses { get; set; }
 
-        public ExpensesCategory()
-        {
-            Expenses_ExpensesCategories = new List<Expenses_ExpensesCategory>();
-        }
+
     }
 }
