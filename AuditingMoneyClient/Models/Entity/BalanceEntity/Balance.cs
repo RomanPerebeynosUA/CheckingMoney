@@ -10,11 +10,14 @@ namespace AuditingMoneyClient.Models.Entity.BalanceEntity
         public int Id { get; set; }
         public double Amount { get; set; }
 
+        public string UserId { get; set; }
 
-        /// <summary>
-        /// one to many connection 
-        /// </summary>
-        public List<KindOfCurrency> KindOfCurrencies { get; set; }
+
+        public List<BalanKindOfCurr> BalanKindOfCurrs { get; set; }
+        public Balance()
+        {
+            BalanKindOfCurrs = new List<BalanKindOfCurr>();
+        }
 
 
         /// <summary>

@@ -15,15 +15,23 @@ namespace AuditingMoneyClient.Models.Entity.IncomeEntity
 
         public DateTime Date { get; set; }
 
-        /// <summary>
-        /// one to many connection 
-        /// </summary>
-        public int CashAccount_Id { get; set; }
-        public CashAccount CashAccount { get; set; }
+
+        public List<IncCategory> IncCategories { get; set; }
+
+        public Income()
+        {
+            IncCategories = new List<IncCategory>();
+        }
 
         /// <summary>
         /// one to many connection 
         /// </summary>
-        public List<IncomeCategory> IncomeCategories { get; set; }
+        public CashAccount CashAccount { get; set; }
+
+
+        ///// <summary>
+        ///// one to many connection 
+        ///// </summary>
+        //public List<IncomeCategory> IncomeCategories { get; set; }
     }
 }

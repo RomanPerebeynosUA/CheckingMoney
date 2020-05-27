@@ -19,6 +19,21 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("AuditingMoneyClient.Models.Entity.BalanceEntity.BalanKindOfCurr", b =>
+                {
+                    b.Property<int>("BalanceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("KindOfCurrencyId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BalanceId", "KindOfCurrencyId");
+
+                    b.HasIndex("KindOfCurrencyId");
+
+                    b.ToTable("BalanKindOfCurr");
+                });
+
             modelBuilder.Entity("AuditingMoneyClient.Models.Entity.BalanceEntity.Balance", b =>
                 {
                     b.Property<int>("Id")
@@ -28,6 +43,9 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
 
                     b.Property<double>("Amount")
                         .HasColumnType("float");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -44,18 +62,10 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
                     b.Property<string>("Badge")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("BalanceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Balance_Id")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BalanceId");
 
                     b.ToTable("KindOfCurrencies");
                 });
@@ -73,9 +83,6 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
                     b.Property<int?>("BalanceId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Balance_Id")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -89,6 +96,21 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
                     b.ToTable("CashAccounts");
                 });
 
+            modelBuilder.Entity("AuditingMoneyClient.Models.Entity.ExpensesEntity.ExpCategory", b =>
+                {
+                    b.Property<int>("ExpensesCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ExpensesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ExpensesCategoryId", "ExpensesId");
+
+                    b.HasIndex("ExpensesId");
+
+                    b.ToTable("ExpCategory");
+                });
+
             modelBuilder.Entity("AuditingMoneyClient.Models.Entity.ExpensesEntity.Expenses", b =>
                 {
                     b.Property<int>("Id")
@@ -100,9 +122,6 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
                         .HasColumnType("float");
 
                     b.Property<int?>("CashAccountId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CashAccount_Id")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
@@ -125,12 +144,6 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ExpensesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id_Expenses")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -139,9 +152,22 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ExpensesId");
-
                     b.ToTable("ExpensesCategories");
+                });
+
+            modelBuilder.Entity("AuditingMoneyClient.Models.Entity.IncomeEntity.IncCategory", b =>
+                {
+                    b.Property<int>("IncomeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IncomeCategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("IncomeId", "IncomeCategoryId");
+
+                    b.HasIndex("IncomeCategoryId");
+
+                    b.ToTable("IncCategory");
                 });
 
             modelBuilder.Entity("AuditingMoneyClient.Models.Entity.IncomeEntity.Income", b =>
@@ -155,9 +181,6 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
                         .HasColumnType("float");
 
                     b.Property<int?>("CashAccountId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CashAccount_Id")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
@@ -180,12 +203,6 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("IncomeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Income_Id")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -193,8 +210,6 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IncomeId");
 
                     b.ToTable("IncomeCategories");
                 });
@@ -276,11 +291,19 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
                     b.ToTable("TransfersTo");
                 });
 
-            modelBuilder.Entity("AuditingMoneyClient.Models.Entity.BalanceEntity.KindOfCurrency", b =>
+            modelBuilder.Entity("AuditingMoneyClient.Models.Entity.BalanceEntity.BalanKindOfCurr", b =>
                 {
                     b.HasOne("AuditingMoneyClient.Models.Entity.BalanceEntity.Balance", "Balance")
-                        .WithMany("KindOfCurrencies")
-                        .HasForeignKey("BalanceId");
+                        .WithMany("BalanKindOfCurrs")
+                        .HasForeignKey("BalanceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AuditingMoneyClient.Models.Entity.BalanceEntity.KindOfCurrency", "KindOfCurrency")
+                        .WithMany("BalanKindOfCurrs")
+                        .HasForeignKey("KindOfCurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("AuditingMoneyClient.Models.Entity.CashAccount", b =>
@@ -290,6 +313,21 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
                         .HasForeignKey("BalanceId");
                 });
 
+            modelBuilder.Entity("AuditingMoneyClient.Models.Entity.ExpensesEntity.ExpCategory", b =>
+                {
+                    b.HasOne("AuditingMoneyClient.Models.Entity.ExpensesEntity.ExpensesCategory", "ExpensesCategory")
+                        .WithMany("ExpCategories")
+                        .HasForeignKey("ExpensesCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AuditingMoneyClient.Models.Entity.ExpensesEntity.Expenses", "Expenses")
+                        .WithMany("ExpCategories")
+                        .HasForeignKey("ExpensesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("AuditingMoneyClient.Models.Entity.ExpensesEntity.Expenses", b =>
                 {
                     b.HasOne("AuditingMoneyClient.Models.Entity.CashAccount", "CashAccount")
@@ -297,11 +335,19 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
                         .HasForeignKey("CashAccountId");
                 });
 
-            modelBuilder.Entity("AuditingMoneyClient.Models.Entity.ExpensesEntity.ExpensesCategory", b =>
+            modelBuilder.Entity("AuditingMoneyClient.Models.Entity.IncomeEntity.IncCategory", b =>
                 {
-                    b.HasOne("AuditingMoneyClient.Models.Entity.ExpensesEntity.Expenses", "Expenses")
-                        .WithMany("ExpensesCategories")
-                        .HasForeignKey("ExpensesId");
+                    b.HasOne("AuditingMoneyClient.Models.Entity.IncomeEntity.IncomeCategory", "IncomeCategory")
+                        .WithMany("IncCategories")
+                        .HasForeignKey("IncomeCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AuditingMoneyClient.Models.Entity.IncomeEntity.Income", "Income")
+                        .WithMany("IncCategories")
+                        .HasForeignKey("IncomeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("AuditingMoneyClient.Models.Entity.IncomeEntity.Income", b =>
@@ -309,13 +355,6 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
                     b.HasOne("AuditingMoneyClient.Models.Entity.CashAccount", "CashAccount")
                         .WithMany("Incomes")
                         .HasForeignKey("CashAccountId");
-                });
-
-            modelBuilder.Entity("AuditingMoneyClient.Models.Entity.IncomeEntity.IncomeCategory", b =>
-                {
-                    b.HasOne("AuditingMoneyClient.Models.Entity.IncomeEntity.Income", "Income")
-                        .WithMany("IncomeCategories")
-                        .HasForeignKey("IncomeId");
                 });
 
             modelBuilder.Entity("AuditingMoneyClient.Models.Entity.TransferEntity.TransferFrom", b =>

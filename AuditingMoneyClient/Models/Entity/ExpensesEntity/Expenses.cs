@@ -15,16 +15,19 @@ namespace AuditingMoneyClient.Models.Entity.ExpensesEntity
 
         public DateTime Date { get; set; }
 
+
+        public List<ExpCategory> ExpCategories { get; set; }
+
+        public Expenses()
+        {
+            ExpCategories = new List<ExpCategory>();
+        }
+
         /// <summary>
         /// one to many connection 
         /// </summary>
-        public int CashAccount_Id { get; set; }
         public CashAccount CashAccount { get; set; }
 
 
-        /// <summary>
-        /// one to many connection 
-        /// </summary>
-        public List<ExpensesCategory> ExpensesCategories { get; set; }
     }
 }

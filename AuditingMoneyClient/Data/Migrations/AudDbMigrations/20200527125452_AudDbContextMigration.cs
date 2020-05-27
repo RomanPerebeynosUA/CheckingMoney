@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
 {
-    public partial class AudDbInitial : Migration
+    public partial class AudDbContextMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,11 +13,54 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Amount = table.Column<double>(nullable: false)
+                    Amount = table.Column<double>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Balances", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExpensesCategories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    Note = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExpensesCategories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "IncomeCategories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    Note = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IncomeCategories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "KindOfCurrencies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    Badge = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_KindOfCurrencies", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -44,7 +87,6 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
                     Name = table.Column<string>(nullable: true),
                     Amount = table.Column<double>(nullable: false),
                     Note = table.Column<string>(nullable: true),
-                    Balance_Id = table.Column<int>(nullable: false),
                     BalanceId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -59,25 +101,27 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "KindOfCurrencies",
+                name: "BalanKindOfCurr",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Badge = table.Column<string>(nullable: true),
-                    Balance_Id = table.Column<int>(nullable: false),
-                    BalanceId = table.Column<int>(nullable: true)
+                    BalanceId = table.Column<int>(nullable: false),
+                    KindOfCurrencyId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_KindOfCurrencies", x => x.Id);
+                    table.PrimaryKey("PK_BalanKindOfCurr", x => new { x.BalanceId, x.KindOfCurrencyId });
                     table.ForeignKey(
-                        name: "FK_KindOfCurrencies_Balances_BalanceId",
+                        name: "FK_BalanKindOfCurr_Balances_BalanceId",
                         column: x => x.BalanceId,
                         principalTable: "Balances",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BalanKindOfCurr_KindOfCurrencies_KindOfCurrencyId",
+                        column: x => x.KindOfCurrencyId,
+                        principalTable: "KindOfCurrencies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -89,7 +133,6 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
                     Amount = table.Column<double>(nullable: false),
                     Note = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
-                    CashAccount_Id = table.Column<int>(nullable: false),
                     CashAccountId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -112,7 +155,6 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
                     Amount = table.Column<double>(nullable: false),
                     Note = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
-                    CashAccount_Id = table.Column<int>(nullable: false),
                     CashAccountId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -183,48 +225,57 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ExpensesCategories",
+                name: "ExpCategory",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Note = table.Column<string>(nullable: true),
-                    Id_Expenses = table.Column<int>(nullable: false),
-                    ExpensesId = table.Column<int>(nullable: true)
+                    ExpensesId = table.Column<int>(nullable: false),
+                    ExpensesCategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExpensesCategories", x => x.Id);
+                    table.PrimaryKey("PK_ExpCategory", x => new { x.ExpensesCategoryId, x.ExpensesId });
                     table.ForeignKey(
-                        name: "FK_ExpensesCategories_Expenses_ExpensesId",
+                        name: "FK_ExpCategory_ExpensesCategories_ExpensesCategoryId",
+                        column: x => x.ExpensesCategoryId,
+                        principalTable: "ExpensesCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ExpCategory_Expenses_ExpensesId",
                         column: x => x.ExpensesId,
                         principalTable: "Expenses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "IncomeCategories",
+                name: "IncCategory",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Note = table.Column<string>(nullable: true),
-                    Income_Id = table.Column<int>(nullable: false),
-                    IncomeId = table.Column<int>(nullable: true)
+                    IncomeId = table.Column<int>(nullable: false),
+                    IncomeCategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_IncomeCategories", x => x.Id);
+                    table.PrimaryKey("PK_IncCategory", x => new { x.IncomeId, x.IncomeCategoryId });
                     table.ForeignKey(
-                        name: "FK_IncomeCategories_Incomes_IncomeId",
+                        name: "FK_IncCategory_IncomeCategories_IncomeCategoryId",
+                        column: x => x.IncomeCategoryId,
+                        principalTable: "IncomeCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_IncCategory_Incomes_IncomeId",
                         column: x => x.IncomeId,
                         principalTable: "Incomes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BalanKindOfCurr_KindOfCurrencyId",
+                table: "BalanKindOfCurr",
+                column: "KindOfCurrencyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CashAccounts_BalanceId",
@@ -232,29 +283,24 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
                 column: "BalanceId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ExpCategory_ExpensesId",
+                table: "ExpCategory",
+                column: "ExpensesId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Expenses_CashAccountId",
                 table: "Expenses",
                 column: "CashAccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExpensesCategories_ExpensesId",
-                table: "ExpensesCategories",
-                column: "ExpensesId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_IncomeCategories_IncomeId",
-                table: "IncomeCategories",
-                column: "IncomeId");
+                name: "IX_IncCategory_IncomeCategoryId",
+                table: "IncCategory",
+                column: "IncomeCategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Incomes_CashAccountId",
                 table: "Incomes",
                 column: "CashAccountId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_KindOfCurrencies_BalanceId",
-                table: "KindOfCurrencies",
-                column: "BalanceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TransfersFrom_CashAccountId",
@@ -280,13 +326,13 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ExpensesCategories");
+                name: "BalanKindOfCurr");
 
             migrationBuilder.DropTable(
-                name: "IncomeCategories");
+                name: "ExpCategory");
 
             migrationBuilder.DropTable(
-                name: "KindOfCurrencies");
+                name: "IncCategory");
 
             migrationBuilder.DropTable(
                 name: "TransfersFrom");
@@ -295,7 +341,16 @@ namespace AuditingMoneyClient.Data.Migrations.AudDbMigrations
                 name: "TransfersTo");
 
             migrationBuilder.DropTable(
+                name: "KindOfCurrencies");
+
+            migrationBuilder.DropTable(
+                name: "ExpensesCategories");
+
+            migrationBuilder.DropTable(
                 name: "Expenses");
+
+            migrationBuilder.DropTable(
+                name: "IncomeCategories");
 
             migrationBuilder.DropTable(
                 name: "Incomes");

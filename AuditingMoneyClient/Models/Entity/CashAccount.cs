@@ -23,7 +23,6 @@ namespace AuditingMoneyClient.Models.Entity
         /// one to many connection 
         /// </summary>
 
-        public int Balance_Id { get; set; }
         public Balance Balance { get; set; }
 
 

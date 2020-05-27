@@ -12,10 +12,12 @@ namespace AuditingMoneyClient.Models.Entity.IncomeEntity
         public string Note { get; set; }
 
 
-        /// <summary>
-        /// one to many connection 
-        /// </summary>
-        public int Income_Id { get; set; }
-        public Income Income { get; set; }
+        public List<IncCategory> IncCategories { get; set; }
+
+        public IncomeCategory()
+        {
+            IncCategories = new List<IncCategory>();
+        }
+
     }
 }

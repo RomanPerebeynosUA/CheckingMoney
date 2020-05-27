@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AuditingMoneyClient.AppFuntctions.Interfaces;
+using AuditingMoneyClient.AppFuntctions.Repositories;
 using AuditingMoneyClient.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -60,6 +62,8 @@ namespace AuditingMoneyClient
               });
             services.AddHttpClient();
             services.AddControllersWithViews();
+
+            services.AddTransient<IBalanceRepository, BalanceRepository>();
         }
 
        
@@ -88,7 +92,7 @@ namespace AuditingMoneyClient
                 var context = serviceScope.ServiceProvider.GetRequiredService<AudDbContext>();
                 context.Database.Migrate();
 
-                //ConfigDatabase.Initilize(context);
+                ConfigDatabase.Initilize(context);
             }
             app.UseEndpoints(endpoints =>
             {
