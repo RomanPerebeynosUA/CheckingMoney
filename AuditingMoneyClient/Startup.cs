@@ -2,12 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AuditingMoneyClient.AppFuntctions.Interfaces;
-using AuditingMoneyClient.AppFuntctions.Repositories;
-using AuditingMoneyClient.Data;
+using AuditingMoneyCore.Data;
+using AuditingMoneyCore.Interfaces;
+using AuditingMoneyCore.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -88,7 +87,7 @@ namespace AuditingMoneyClient
 
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-               // automatic migration
+                // automatic migration
                 var context = serviceScope.ServiceProvider.GetRequiredService<AudDbContext>();
                 context.Database.Migrate();
 

@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "IdentityServer\IdentityServer.csproj", "{9D086A7C-7D24-46BB-AB25-81F9E25D9418}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "IdentityServer\IdentityServer.csproj", "{9D086A7C-7D24-46BB-AB25-81F9E25D9418}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuditingMoneyClient", "AuditingMoneyClient\AuditingMoneyClient.csproj", "{1B1F4978-986C-416C-8344-171D15B4AD39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuditingMoneyClient", "AuditingMoneyClient\AuditingMoneyClient.csproj", "{1B1F4978-986C-416C-8344-171D15B4AD39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuditingMoneyCore", "AuditingMoneyCore\AuditingMoneyCore.csproj", "{F665D9A3-1110-4E5B-8A6E-BBEB58C22FFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuditingMoney.Entity", "AuditingMoney.Entity\AuditingMoney.Entity.csproj", "{8E677B03-CF73-4BC5-8793-4B3A576598BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{1B1F4978-986C-416C-8344-171D15B4AD39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B1F4978-986C-416C-8344-171D15B4AD39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B1F4978-986C-416C-8344-171D15B4AD39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F665D9A3-1110-4E5B-8A6E-BBEB58C22FFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F665D9A3-1110-4E5B-8A6E-BBEB58C22FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F665D9A3-1110-4E5B-8A6E-BBEB58C22FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F665D9A3-1110-4E5B-8A6E-BBEB58C22FFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E677B03-CF73-4BC5-8793-4B3A576598BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E677B03-CF73-4BC5-8793-4B3A576598BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E677B03-CF73-4BC5-8793-4B3A576598BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E677B03-CF73-4BC5-8793-4B3A576598BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
