@@ -1,4 +1,4 @@
-﻿dotnet ef migrations add AudDbContextMigration -c AudDbContext -o Data/Migrations/AudDbMigrations
-dotnet ef database update -c AudDbContext
+﻿dotnet ef migrations add AuditingDbContextMigration -c AuditingDbContext -o Data/Migrations/AudDbMigrations
+dotnet ef database update -c AuditingDbContext
 
 dotnet tool update --global dotnet-ef --version 3.1.4

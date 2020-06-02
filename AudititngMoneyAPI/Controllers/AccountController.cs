@@ -5,15 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AuditingMoneyClient.Controllers
+namespace AudititngMoneyAPI.Controllers
 {
     public class AccountController : Controller
     {
-   
         [Authorize]
-        public IActionResult IdentityPage()
+        public IActionResult Index()
         {
             return View();
-        }    
+        }
     }
 }

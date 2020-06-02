@@ -6,24 +6,28 @@ using AuditingMoney.Entity.Domain.TransferEntity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
 namespace AuditingMoneyCore.Data
 {
-    public class AudDbContext : DbContext
-    {
+    public  class AuditingDbContext : DbContext    {
+
+        public AuditingDbContext(DbContextOptions<AuditingDbContext> options) 
+            : base(options)
+        {
+            Database.EnsureCreated();
+        }
         public DbSet<KindOfCurrency> KindOfCurrencies { get; set; }
         public DbSet<Balance> Balances { get; set; }
-       // public DbSet<BalanKindOfCurr> BalanKindOfCurrs { get; set; }
+        // public DbSet<BalanKindOfCurr> BalanKindOfCurrs { get; set; }
 
         public DbSet<Expenses> Expenses { get; set; }
         public DbSet<ExpensesCategory> ExpensesCategories { get; set; }
-      //  public DbSet<ExpCategory> ExpCategories { get; set; }
+        //  public DbSet<ExpCategory> ExpCategories { get; set; }
 
         public DbSet<Income> Incomes { get; set; }
         public DbSet<IncomeCategory> IncomeCategories { get; set; }
-      //  public DbSet<IncCategory> IncCategories { get; set; }
+        //  public DbSet<IncCategory> IncCategories { get; set; }
 
         public DbSet<Transfer> Transfers { get; set; }
         public DbSet<TransferFrom> TransfersFrom { get; set; }
@@ -32,10 +36,7 @@ namespace AuditingMoneyCore.Data
         public DbSet<CashAccount> CashAccounts { get; set; }
 
 
-        public AudDbContext(DbContextOptions<AudDbContext> options) : base(options)
-        {
-            //Database.EnsureCreated();
-        }
+       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<IncCategory>()

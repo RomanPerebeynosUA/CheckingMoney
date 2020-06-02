@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "IdentityS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuditingMoneyClient", "AuditingMoneyClient\AuditingMoneyClient.csproj", "{1B1F4978-986C-416C-8344-171D15B4AD39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuditingMoneyCore", "AuditingMoneyCore\AuditingMoneyCore.csproj", "{F665D9A3-1110-4E5B-8A6E-BBEB58C22FFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuditingMoneyCore", "AuditingMoneyCore\AuditingMoneyCore.csproj", "{F665D9A3-1110-4E5B-8A6E-BBEB58C22FFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuditingMoney.Entity", "AuditingMoney.Entity\AuditingMoney.Entity.csproj", "{8E677B03-CF73-4BC5-8793-4B3A576598BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuditingMoney.Entity", "AuditingMoney.Entity\AuditingMoney.Entity.csproj", "{8E677B03-CF73-4BC5-8793-4B3A576598BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudititngMoneyAPI", "AudititngMoneyAPI\AudititngMoneyAPI.csproj", "{48085FCB-527A-4777-ACC2-E2632DF89F9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{8E677B03-CF73-4BC5-8793-4B3A576598BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E677B03-CF73-4BC5-8793-4B3A576598BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E677B03-CF73-4BC5-8793-4B3A576598BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48085FCB-527A-4777-ACC2-E2632DF89F9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48085FCB-527A-4777-ACC2-E2632DF89F9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48085FCB-527A-4777-ACC2-E2632DF89F9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48085FCB-527A-4777-ACC2-E2632DF89F9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

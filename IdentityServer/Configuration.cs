@@ -20,7 +20,7 @@ namespace IdentityServer
         public static IEnumerable<ApiResource> GetApis() =>
             new List<ApiResource>
             {
-               // new ApiResource("SpendingDiary"),
+                new ApiResource("AuditingMoneyAPI"),
             };
 
         public static IEnumerable<Client> GetClients() =>
@@ -37,7 +37,7 @@ namespace IdentityServer
                     AllowedGrantTypes = GrantTypes.ClientCredentials, 
 
                     // access to some API
-                    AllowedScopes = { "SpendingDiary"}
+                    AllowedScopes = { "AuditingMoneyAPI" }
 
                 },
                       new Client
@@ -56,6 +56,7 @@ namespace IdentityServer
                     AllowedScopes = {
                         IdentityServer4.IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServer4.IdentityServerConstants.StandardScopes.Profile,
+                        "AuditingMoneyAPI",
                      },
                     RequireConsent = false,
                    

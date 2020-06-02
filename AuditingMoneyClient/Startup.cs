@@ -2,9 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AuditingMoneyCore.Data;
-using AuditingMoneyCore.Interfaces;
-using AuditingMoneyCore.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -25,11 +22,11 @@ namespace AuditingMoneyClient
        
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = _config.GetConnectionString("DefaultConnection");
-            services.AddDbContext<AudDbContext>(config =>
-            {
-                config.UseSqlServer(connectionString);
-            });
+            //var connectionString = _config.GetConnectionString("DefaultConnection");
+            //services.AddDbContext<AuditingDbContext>(config =>
+            //{
+            //    config.UseSqlServer(connectionString);
+            //});
 
             services.AddAuthentication(config =>
             {
@@ -62,7 +59,7 @@ namespace AuditingMoneyClient
             services.AddHttpClient();
             services.AddControllersWithViews();
 
-            services.AddTransient<IBalanceRepository, BalanceRepository>();
+            //services.AddTransient<IBalanceRepository, BalanceRepository>();
         }
 
        
@@ -85,14 +82,14 @@ namespace AuditingMoneyClient
 
             app.UseAuthorization();
 
-            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-            {
-                // automatic migration
-                var context = serviceScope.ServiceProvider.GetRequiredService<AudDbContext>();
-                context.Database.Migrate();
+            //using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            //{
+            //    // automatic migration
+            //    var context = serviceScope.ServiceProvider.GetRequiredService<AuditingDbContext>();
+            //    context.Database.Migrate();
 
-                ConfigDatabase.Initilize(context);
-            }
+            //    ConfigDatabase.Initilize(context);
+            //}
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();

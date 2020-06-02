@@ -10,8 +10,8 @@ namespace AuditingMoneyCore.Repositories
 {
     public class BalanceRepository : IBalanceRepository
     {
-       private readonly  AudDbContext _context;
-        public BalanceRepository(AudDbContext context)
+       private readonly AuditingDbContext _context;
+        public BalanceRepository(AuditingDbContext context)
         {
            _context = context;
         }
@@ -19,7 +19,7 @@ namespace AuditingMoneyCore.Repositories
 
         public bool Exists(int id)
         {
-            throw new NotImplementedException();
+            return _context.Balances.Any(e => e.Id == id);
         }
 
         public IQueryable<Balance> GetEntityNoAsyncListItems()
@@ -37,19 +37,22 @@ namespace AuditingMoneyCore.Repositories
             throw new NotImplementedException();
         }
 
-        public Task RemoveEntity(Balance entity)
+        public async Task RemoveEntity(Balance entity)
         {
-            throw new NotImplementedException();
+            _context.Balances.Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public Task SaveEntity(Balance entity)
+        public async Task SaveEntity(Balance entity)
         {
-            throw new NotImplementedException();
+            _context.Balances.Add(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdateEntity(Balance entity)
+        public async Task UpdateEntity(Balance entity)
         {
-            throw new NotImplementedException();
+            _context.Balances.Update(entity);
+            await _context.SaveChangesAsync();
         }
     }
 }

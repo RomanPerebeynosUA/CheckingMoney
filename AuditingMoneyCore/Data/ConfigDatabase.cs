@@ -10,7 +10,7 @@ namespace AuditingMoneyCore.Data
 {
     public class ConfigDatabase
     {
-        public static void Initilize(AudDbContext context)
+        public static void Initilize(AuditingDbContext context)
         {
             if (!context.IncomeCategories.Any())
             {
