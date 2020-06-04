@@ -17,7 +17,7 @@ namespace AuditingMoneyCore.Repositories
         }
 
 
-        public bool Exists(int id)
+        public bool Exists(string id)
         {
             return _context.Balances.Any(e => e.Id == id);
         }

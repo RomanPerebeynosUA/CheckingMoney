@@ -40,8 +40,11 @@ namespace AuditingMoneyClient
                  config.ClientId = "client_id_mvc";
                  config.ClientSecret = "client_secret_mvc";
                  config.SaveTokens = true;
+           
                  config.SignedOutCallbackPath = "/Home/Index";
                  config.ResponseType = "code";
+
+               //  config.Scope.Add("AudititngMoneyAPI");
 
                   //configure cookie claim mapping
                   //config.ClaimActions.DeleteClaim("amr");
