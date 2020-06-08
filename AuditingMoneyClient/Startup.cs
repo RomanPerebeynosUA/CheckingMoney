@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -27,6 +28,7 @@ namespace AuditingMoneyClient
             //{
             //    config.UseSqlServer(connectionString);
             //});
+            JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
             services.AddAuthentication(config =>
             {
@@ -44,21 +46,21 @@ namespace AuditingMoneyClient
                  config.SignedOutCallbackPath = "/Home/Index";
                  config.ResponseType = "code";
 
-               //  config.Scope.Add("AudititngMoneyAPI");
+                 config.Scope.Add("AuditingMoneyAPI");             
 
-                  //configure cookie claim mapping
-                  //config.ClaimActions.DeleteClaim("amr");
-                  //config.ClaimActions.MapUniqueJsonKey("Some.Grandma", "rc.grandma");
+                 //configure cookie claim mapping
+                 //config.ClaimActions.DeleteClaim("amr");
+                 //config.ClaimActions.MapUniqueJsonKey("Some.Grandma", "rc.grandma");
 
-                  ////configure scope
-                  //config.Scope.Clear();
-                  //config.Scope.Add("openid");
-                  //config.Scope.Add("rs.scope");
+                 ////configure scope
+                 //config.Scope.Clear();
+                 //config.Scope.Add("openid");
+                 //config.Scope.Add("rs.scope");
 
-                  //two trips to load claims in the cookie
-                  //but the id token is smaller !
-                  //config.GetClaimsFromUserInfoEndpoint = true;
-              });
+                 //two trips to load claims in the cookie
+                 //but the id token is smaller !
+                 //config.GetClaimsFromUserInfoEndpoint = true;
+             });
             services.AddHttpClient();
             services.AddControllersWithViews();
 
@@ -93,9 +95,15 @@ namespace AuditingMoneyClient
 
             //    ConfigDatabase.Initilize(context);
             //}
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapDefaultControllerRoute();
+            //});
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute();
+                endpoints.MapDefaultControllerRoute()
+                    .RequireAuthorization();
             });
         }
     }

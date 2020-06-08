@@ -1,6 +1,7 @@
 ﻿using AuditingMoney.Entity.Domain.BalanceEntity;
 using AuditingMoneyCore.Data;
 using AuditingMoneyCore.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,49 +11,64 @@ namespace AuditingMoneyCore.Repositories
 {
     public class BalanceRepository : IBalanceRepository
     {
-       private readonly AuditingDbContext _context;
+        private readonly AuditingDbContext _context;
         public BalanceRepository(AuditingDbContext context)
         {
            _context = context;
         }
 
-
-        public bool Exists(string id)
+        public bool Exists(int id)
         {
             return _context.Balances.Any(e => e.Id == id);
         }
 
-        public IQueryable<Balance> GetEntityNoAsyncListItems()
+        public bool ExistsByUserId(string id)
         {
-            throw new NotImplementedException();
+            return _context.Balances.Any(e => e.UserId == id);
         }
 
-        public Task<Balance> GetItem(int id)
+      
+
+        public async Task<Balance> GetItem(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Balances.FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public Task<List<Balance>> GetListItems()
+        public async Task<Balance> GetItemByUserId(string id)
         {
-            throw new NotImplementedException();
+            return await _context.Balances.FirstOrDefaultAsync(e => e.UserId == id);
         }
 
-        public async Task RemoveEntity(Balance entity)
+        public async Task<List<Balance>> GetListItems()
+        {
+            return await _context.Balances.ToListAsync();          
+        }
+        public async Task<List<Balance>> GetListItems(string id)
+        {
+            return await _context.Balances.Where(e => e.UserId == id).ToListAsync();
+        }
+
+        public async Task Remove(Balance entity)
         {
             _context.Balances.Remove(entity);
             await _context.SaveChangesAsync();
         }
 
-        public async Task SaveEntity(Balance entity)
+        public async Task Create(Balance entity)
         {
             _context.Balances.Add(entity);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateEntity(Balance entity)
+        public async Task Update(Balance entity)
         {
             _context.Balances.Update(entity);
             await _context.SaveChangesAsync();
+        }
+
+        public IQueryable<Balance> GetEntityNoAsyncListItems()
+        {
+            throw new NotImplementedException();
         }
     }
 }

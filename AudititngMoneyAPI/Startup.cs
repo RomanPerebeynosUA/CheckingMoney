@@ -37,14 +37,25 @@ namespace AudititngMoneyAPI
                 .AddJwtBearer("Bearer", config =>
                 {
                     config.Authority = "https://localhost:44393/";
+                    
                     config.Audience = "AuditingMoneyAPI";
                     
                 });
-
+            services.AddCors(options =>
+            {
+                // this defines a CORS policy called "default"
+                options.AddPolicy("default", policy =>
+                {
+                    policy.WithOrigins("https://localhost:44328/")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
             services.AddHttpClient();
             services.AddControllersWithViews();
 
             services.AddTransient<IBalanceRepository, BalanceRepository>();
+            services.AddTransient<ICashAccountRepository, CashAccountRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -58,8 +69,11 @@ namespace AudititngMoneyAPI
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseCors("default");
+            
             app.UseAuthentication();
+            app.UseAuthorization();
+           
 
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {

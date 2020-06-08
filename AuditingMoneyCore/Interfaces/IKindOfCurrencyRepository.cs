@@ -11,9 +11,13 @@ namespace AuditingMoneyCore.Interfaces
         bool Exists(int id);
         Task<List<KindOfCurrency>> GetListItems();
         Task<KindOfCurrency> GetItem(int id);
-        Task SaveEntity(KindOfCurrency entity);
-        Task RemoveEntity(KindOfCurrency entity);
-        Task UpdateEntity(KindOfCurrency entity);
+        
+
+        Task Create(KindOfCurrency entity);
+        Task Remove(KindOfCurrency entity);
+        Task Update(KindOfCurrency entity);
+
+       
         IQueryable<KindOfCurrency> GetEntityNoAsyncListItems();
     }
 }

@@ -21,6 +21,7 @@ namespace IdentityServer
             new List<ApiResource>
             {
                 new ApiResource("AuditingMoneyAPI"),
+             //   new ApiResource("SimpleAPI"),
             };
 
         public static IEnumerable<Client> GetClients() =>
@@ -57,9 +58,11 @@ namespace IdentityServer
                         IdentityServer4.IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServer4.IdentityServerConstants.StandardScopes.Profile,
                         "AuditingMoneyAPI",
+                      //  "SimpleAPI",
                      },
                     RequireConsent = false,
-                   
+                    RequirePkce = true,
+                   AllowOfflineAccess = true
                      // puts all the claims in the id token     
                   //  AlwaysIncludeUserClaimsInIdToken = true,
                 }

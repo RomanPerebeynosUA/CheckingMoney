@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuditingMoneyCore", "Auditi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuditingMoney.Entity", "AuditingMoney.Entity\AuditingMoney.Entity.csproj", "{8E677B03-CF73-4BC5-8793-4B3A576598BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudititngMoneyAPI", "AudititngMoneyAPI\AudititngMoneyAPI.csproj", "{48085FCB-527A-4777-ACC2-E2632DF89F9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudititngMoneyAPI", "AudititngMoneyAPI\AudititngMoneyAPI.csproj", "{48085FCB-527A-4777-ACC2-E2632DF89F9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

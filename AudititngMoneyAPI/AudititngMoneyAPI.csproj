@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AuditingMoney.Entity\AuditingMoney.Entity.csproj" />
     <ProjectReference Include="..\AuditingMoneyCore\AuditingMoneyCore.csproj" />
   </ItemGroup>
 

@@ -8,12 +8,19 @@ namespace AuditingMoneyCore.Interfaces
 {
     public interface IBalanceRepository
     {
-        bool Exists(string id);
+        bool Exists(int id);
+        bool ExistsByUserId(string id);
+
         Task<List<Balance>> GetListItems();
+        Task<List<Balance>> GetListItems(string id);
+
         Task<Balance> GetItem(int id);
-        Task SaveEntity(Balance entity);
-        Task RemoveEntity(Balance entity);
-        Task UpdateEntity(Balance entity);
+        Task<Balance> GetItemByUserId(string id);
+
+        Task Create(Balance entity);
+        Task Remove(Balance entity);
+        Task Update(Balance entity);
+
         IQueryable<Balance> GetEntityNoAsyncListItems();
     }
 }

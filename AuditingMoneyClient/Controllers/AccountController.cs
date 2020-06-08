@@ -11,27 +11,50 @@ using Newtonsoft.Json.Linq;
 
 namespace AuditingMoneyClient.Controllers
 {
-   
+
     public class AccountController : Controller
     {
-        //[Authorize]
-        //public IActionResult IdentityPage()
-        //{
-        //    return View();
-        //}
-
-        [Authorize]
         public async Task<IActionResult> IdentityPage()
+        {
+            //var accessToken = await HttpContext.GetTokenAsync("access_token");
+
+            //var client = new HttpClient();
+            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            //var content = await client.GetStringAsync("https://localhost:44382/identity");
+
+            //ViewBag.Json = JArray.Parse(content).ToString();
+            return View();
+        }
+        public async Task<IActionResult> CallApi()
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");
 
             var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization   = new AuthenticationHeaderValue("Bearer", accessToken);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             var content = await client.GetStringAsync("https://localhost:44382/identity");
 
-            ViewBag.Json = JArray.Parse(content).ToString();
+            //ViewBag.Json = JArray.Parse(content).ToString();
+            ViewBag.Json = JObject.Parse(content).ToString();
             return View();
         }
+
+        public async Task<IActionResult> Index()
+        {
+            return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            return View();
+        }
+
+        //[HttpPost]
+        //public async Task<IActionResult> Create()
+        //{
+        //    return View();
+        //}
+
+
 
 
     }
