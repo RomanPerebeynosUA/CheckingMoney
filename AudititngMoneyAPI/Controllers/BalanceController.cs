@@ -10,8 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AudititngMoneyAPI.Controllers
 {
-    [Route("identity")]
+    
     [Authorize]
+    [Route("identity")]
     public class BalanceController : ControllerBase
     {
        private readonly IBalanceRepository _balanceRepository;
@@ -19,6 +20,7 @@ namespace AudititngMoneyAPI.Controllers
         {
             _balanceRepository = balanceRepository;
         }
+      
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -35,9 +37,10 @@ namespace AudititngMoneyAPI.Controllers
             }
             else
             {
-               var balance =  await _balanceRepository.GetItemByUserId(user_id);
-               return new JsonResult(balance);
+                var balance =  await _balanceRepository.GetItemByUserId(user_id);
+                return new JsonResult(from c in User.Claims select new { c.Type, c.Value });
+                // return RedirectToAction(nameof(Index));
             }
-        }
+        }     
     }
 }

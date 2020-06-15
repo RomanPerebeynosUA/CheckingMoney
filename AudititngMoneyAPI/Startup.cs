@@ -85,7 +85,7 @@ namespace AudititngMoneyAPI
             }
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }

@@ -34,28 +34,15 @@ namespace AuditingMoneyClient.Controllers
             var content = await client.GetStringAsync("https://localhost:44382/identity");
 
             //ViewBag.Json = JArray.Parse(content).ToString();
-            ViewBag.Json = JObject.Parse(content).ToString();
+            // ViewBag.Json = JObject.Parse(content).ToString();
             return View();
+           // return Redirect("https://localhost:44382/identity");
         }
 
         public async Task<IActionResult> Index()
         {
             return View();
         }
-        [HttpGet]
-        public async Task<IActionResult> Create()
-        {
-            return View();
-        }
-
-        //[HttpPost]
-        //public async Task<IActionResult> Create()
-        //{
-        //    return View();
-        //}
-
-
-
-
+    
     }
 }
