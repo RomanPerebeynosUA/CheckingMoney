@@ -7,11 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AudititngMoneyAPI.Controllers
 {
-    [Authorize]
+    
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(string user_id)
         {
+            ViewBag.UserId = user_id;
             return View();
         }
     }

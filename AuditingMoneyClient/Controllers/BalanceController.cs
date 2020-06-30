@@ -3,33 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AuditingMoneyClient.Models.Balance;
+using AuditingMoneyClient.Models.JsonModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuditingMoneyClient.Controllers
 {
     public class BalanceController : Controller
     {
-        public IActionResult Index()
+        public ActionResult Index()
         {
-            return View();
+            List<BalanceJsonModel> balances = new List<BalanceJsonModel>();
+         var balancesViews = new List<BalanceViewModel>();
+
+            foreach (BalanceJsonModel b in balances)
+            {
+                balancesViews.Add(new BalanceViewModel
+                {
+                    Amount = b.Amount,
+                    Name = "грн",
+                 
+                }) ;
+            }
+
+            return View(balancesViews);
         }
-        [HttpGet]
+
         public IActionResult Create()
         {
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Create([Bind("Name, Amount, Note, Currency")] CashAccountViewModel CashAccount)
-        {
-            if (ModelState.IsValid)
-            {
-
-                //  await dataManager.CountryRepository.SaveEntity(country);
-                return RedirectToAction(nameof(Index));
-            }
-            // return View(country);
-            return View();
-        }
     }
 }

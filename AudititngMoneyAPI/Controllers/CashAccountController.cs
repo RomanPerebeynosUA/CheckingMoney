@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
-using AuditingMoney.Entity.Domain.BalanceEntity;
+using System.Web.Http;
+using AuditingMoney.Entity.Domain;
 using AuditingMoneyCore.Interfaces;
+using AudititngMoneyAPI.Models.Balance;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AudititngMoneyAPI.Controllers
 {
-    [Authorize]
-    [Route("cashAccount")]
-    public class CashAccountController : Controller
+    [System.Web.Http.Authorize]
+    public class CashAccountController : ControllerBase
     {
+        private readonly HttpClient _client;
         private readonly IBalanceRepository _balanceRepository;
         private readonly ICashAccountRepository _cashAccountRepository;
         public CashAccountController(IBalanceRepository balanceRepository,
@@ -23,24 +26,16 @@ namespace AudititngMoneyAPI.Controllers
             _cashAccountRepository = cashAccountRepository;
         }
 
-        public async Task<IActionResult> Create()
-        {
-            var accessToken = await HttpContext.GetTokenAsync("access_token");
-
-            var user_id = User.Claims.FirstOrDefault(e => e.Type ==
-            "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")
-                .Value.ToString();
-
-            if (!_balanceRepository.ExistsByUserId(user_id))
-            {
-                await _balanceRepository.Create(new Balance { Amount = 0, UserId = user_id });
-                return new JsonResult(from c in User.Claims select new { c.Type, c.Value });
-            }
-            else
-            {
-                var balance = await _balanceRepository.GetItemByUserId(user_id);
-                return new JsonResult(balance);
-            }
-        }
+        //[System.Web.Http.HttpPost]
+        //public async Task<IHttpActionResult> Create()
+        //{
+            
+        //    if (ModelState.IsValid)
+        //    {
+                
+        //    }
+        //    return Ok();
+          
+        //}
     }
 }

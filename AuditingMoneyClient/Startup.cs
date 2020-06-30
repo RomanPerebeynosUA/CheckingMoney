@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
+using AuditingMoneyClient.Core.Interfaces;
+using AuditingMoneyClient.Core.Repositories;
+using AuditingMoneyClient.Models.Balance;
+using AuditingMoneyClient.Models.JsonModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -23,11 +27,7 @@ namespace AuditingMoneyClient
        
         public void ConfigureServices(IServiceCollection services)
         {
-            //var connectionString = _config.GetConnectionString("DefaultConnection");
-            //services.AddDbContext<AuditingDbContext>(config =>
-            //{
-            //    config.UseSqlServer(connectionString);
-            //});
+           
             JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
             services.AddAuthentication(config =>
@@ -62,9 +62,16 @@ namespace AuditingMoneyClient
                  //config.GetClaimsFromUserInfoEndpoint = true;
              });
             services.AddHttpClient();
+            services.AddHttpClient<IAPIResponse, APIResponse>();
+
             services.AddControllersWithViews();
 
-            //services.AddTransient<IBalanceRepository, BalanceRepository>();
+            services.AddTransient<IEntityDeseralizeJson<BalanceJsonModel>, BalanceRepository>();
+            services.AddTransient<IConvertBalance, BalanceRepository>();
+            services.AddTransient<IConvertCashAccount, CashAccountRepository>();
+
+
+
         }
 
        
@@ -87,19 +94,6 @@ namespace AuditingMoneyClient
 
             app.UseAuthorization();
 
-            //using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-            //{
-            //    // automatic migration
-            //    var context = serviceScope.ServiceProvider.GetRequiredService<AuditingDbContext>();
-            //    context.Database.Migrate();
-
-            //    ConfigDatabase.Initilize(context);
-            //}
-
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapDefaultControllerRoute();
-            //});
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute()
