@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace AuditingMoneyClient.Core.Interfaces
 {
-    public interface IAPIResponse
+    public interface IAPIResponse<T>
     {
         Task<string> ConnectToAPI(string url, string accessToken);
 
-        Task<string> SendContentToAPI(string url, string accessToken);
+        Task<HttpResponseMessage> SendContentToAPI(string url, string accessToken, StringContent content);
+
+        Task<HttpResponseMessage> SendObjToAPI(string url, string accessToken, T content);
     }
 }

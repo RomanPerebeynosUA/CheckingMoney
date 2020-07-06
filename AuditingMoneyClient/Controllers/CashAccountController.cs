@@ -15,12 +15,13 @@ namespace AuditingMoneyClient.Controllers
 {
     public class CashAccountController : Controller
     {
-        private readonly HttpClient _client;
+        private readonly IAPIResponse<CashAccountJsonModel> _apiResponse;
         private readonly IConvertCashAccount _convert;
-        public CashAccountController(IConvertCashAccount convert)
+        public CashAccountController(IConvertCashAccount convert, IAPIResponse<CashAccountJsonModel> apiResponse)
         {
 
             _convert = convert;
+            _apiResponse = apiResponse;
         }
 
         public IActionResult Index()
@@ -35,20 +36,22 @@ namespace AuditingMoneyClient.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(CashAccountViewModel cashAccountViewModel, int balanceid)
+        public async Task<IActionResult> Create(CashAccountViewModel cashAccountViewModel)
+            //int balanceid)
         {
             if (ModelState.IsValid)
             {
-              CashAccountJsonModel cashAccount = _convert.ConvertTo(cashAccountViewModel, balanceid);
-
+              CashAccountJsonModel cashAccount = _convert.ConvertTo(cashAccountViewModel, 1);
                 var accessToken = await HttpContext.GetTokenAsync("access_token");
-                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-                var content = new StringContent(JsonConvert.SerializeObject(cashAccount));
+              //  var content = new StringContent(JsonConvert.SerializeObject(cashAccount));
 
-                HttpResponseMessage response = await _client.PostAsync("https://localhost:44382/CashAccount/Create", content);
-                response.EnsureSuccessStatusCode();
+                //var result = await _apiResponse.SendContentToAPI("https://localhost:44382/CreateCash", accessToken, content);
 
-                return RedirectToAction(nameof(Index));
+                var result = await _apiResponse.SendObjToAPI("https://localhost:44382/CashAccount/PostCash", accessToken, cashAccount);
+                if (result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction(nameof(Index));
+                } 
             }
             return View(cashAccountViewModel);
         }

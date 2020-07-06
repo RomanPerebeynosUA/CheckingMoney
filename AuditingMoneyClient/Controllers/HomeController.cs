@@ -21,13 +21,13 @@ namespace AuditingMoneyClient.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        private readonly IAPIResponse _responseToAPI;
+        private readonly IAPIResponse<CashAccountJsonModel> _responseToAPI;
         private readonly IEntityDeseralizeJson<BalanceJsonModel> _deseralizeBalanceJson;
         private readonly IConvertBalance _convert;
 
         public HomeController(
             ILogger<HomeController> logger, 
-            IAPIResponse responseToAPI,
+            IAPIResponse<CashAccountJsonModel> responseToAPI,
             IEntityDeseralizeJson<BalanceJsonModel> deseralizeBalanceJson,
             IConvertBalance convert)
         {

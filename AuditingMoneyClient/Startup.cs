@@ -62,7 +62,7 @@ namespace AuditingMoneyClient
                  //config.GetClaimsFromUserInfoEndpoint = true;
              });
             services.AddHttpClient();
-            services.AddHttpClient<IAPIResponse, APIResponse>();
+            services.AddHttpClient<IAPIResponse<CashAccountJsonModel>, APIResponse>();
 
             services.AddControllersWithViews();
 
