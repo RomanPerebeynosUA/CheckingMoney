@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using AuditingMoneyCore.Data;
 using AuditingMoneyCore.Interfaces;
 using AuditingMoneyCore.Repositories;
+using AudititngMoneyAPI.Mapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -53,6 +55,9 @@ namespace AudititngMoneyAPI
             });
             services.AddHttpClient();
             services.AddControllersWithViews();
+
+            services.AddAutoMapper(
+                 c => c.AddProfile<DomainProfile>(), typeof(Startup));
 
             services.AddTransient<IBalanceRepository, BalanceRepository>();
             services.AddTransient<ICashAccountRepository, CashAccountRepository>();

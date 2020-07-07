@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AudititngMoneyAPI.Models.Balance
+namespace AuditingMoneyAPI.Models.JsonModels
 {
-    public class CashAccountViewModel
+    public class CashAccountJsonModel
     {
         public string Name { get; set; }
 
@@ -14,6 +14,7 @@ namespace AudititngMoneyAPI.Models.Balance
         public string Note { get; set; }
 
         public int Balance_Id { get; set; }
+
 
     }
 }

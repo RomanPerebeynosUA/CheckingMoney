@@ -4,9 +4,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using AuditingMoneyClient.Core.Interfaces;
+using AuditingMoneyClient.Core.Mapper;
 using AuditingMoneyClient.Core.Repositories;
 using AuditingMoneyClient.Models.Balance;
 using AuditingMoneyClient.Models.JsonModels;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +26,7 @@ namespace AuditingMoneyClient
         {
             _config = config;
         }
-       
+     
         public void ConfigureServices(IServiceCollection services)
         {
            
@@ -65,6 +67,12 @@ namespace AuditingMoneyClient
             services.AddHttpClient<IAPIResponse<CashAccountJsonModel>, APIResponse>();
 
             services.AddControllersWithViews();
+            services.AddAutoMapper( 
+                c=> c.AddProfile<DomainProfile>(), typeof(Startup));
+
+
+
+
 
             services.AddTransient<IEntityDeseralizeJson<BalanceJsonModel>, BalanceRepository>();
             services.AddTransient<IConvertBalance, BalanceRepository>();

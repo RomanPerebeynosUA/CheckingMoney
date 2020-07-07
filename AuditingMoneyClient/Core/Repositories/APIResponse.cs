@@ -48,7 +48,7 @@ namespace AuditingMoneyClient.Core.Repositories
                    .Accept
                    .Add(new MediaTypeWithQualityHeaderValue("application/json"));
             
-            var response = await _client.PostAsJsonAsync<object>(url, content);
+            var response = await _client.PostAsJsonAsync(url, content);
             //  var response = await _client.PostAsync(url, content);
 
 

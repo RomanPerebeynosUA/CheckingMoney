@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AuditingMoney.Entity.Domain.BalanceEntity;
 using AuditingMoneyCore.Interfaces;
-using AudititngMoneyAPI.Models.Balance;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
