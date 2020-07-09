@@ -5,60 +5,55 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace AuditingMoneyClient.Core.Repositories
 {
-    public class BalanceRepository : IEntityDeseralizeJson<BalanceJsonModel>, 
-        IConvertBalance
+    public class BalanceRepository : IBalanceRepository
     {
-        public List<BalanceJsonModel> ConverListTo(List<BalanceViewModel> items)
+        private readonly IHttpClientFactory _clientFactory;
+
+        public BalanceRepository(IHttpClientFactory clientFactory)
         {
-            List<BalanceJsonModel> balances = new List<BalanceJsonModel>();
-            return balances;
+            _clientFactory = clientFactory;
         }
-
-        public List<BalanceViewModel> ConverListTo(List<BalanceJsonModel> items)
+        public async Task<HttpResponseMessage> CreateBalance(string url, string accessToken, BalanceJsonModel content)
         {
-            List<BalanceViewModel> balances = new List<BalanceViewModel>();
-            foreach(BalanceJsonModel item in items)
-            {
-                BalanceViewModel balance = new BalanceViewModel
-                {
-                    Amount = item.Amount,
-                    Id = item.Id,
-                };
-                balances.Add(balance);
-            }
-            return balances;
+            var client = _clientFactory.CreateClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            client.DefaultRequestHeaders
+                   .Accept
+                   .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var response = await client.PostAsJsonAsync(url, content);       
+            return response.EnsureSuccessStatusCode();
         }
-
-        public BalanceViewModel ConvertTo(BalanceJsonModel item)
-        {
-            BalanceViewModel balance = new BalanceViewModel
-            {
-                Amount = item.Amount,
-                Id = item.Id,
-
-            };
-            return balance;
-        }
-
-        public BalanceJsonModel ConvertTo(BalanceViewModel item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<BalanceJsonModel> DeseralizeList(string json)
+        public List<BalanceJsonModel> DeseralizeBalances(string json)
         {
             var balances =  JsonConvert.DeserializeObject<List<BalanceJsonModel>>(json);
             return balances;
         }
 
-        public BalanceJsonModel DeseralizeObject(string json)
+        public BalanceJsonModel DeseralizeBalance(string json)
         {
             var balance = JsonConvert.DeserializeObject<BalanceJsonModel>(json);
             return balance;
+        }
+
+        public async Task<string> GetBalance(string url, string accessToken)
+        {
+            var client = _clientFactory.CreateClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+            var response = await client.GetAsync(url);
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+            var result = await response.Content.ReadAsStringAsync();
+            return result;
         }
     }
     

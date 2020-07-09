@@ -32,18 +32,21 @@ namespace AudititngMoneyAPI.Controllers
             _mapper = mapper;
         }
 
+
         [HttpPost]
-        public async Task<ActionResult<CashAccountJsonModel>> PostCash(CashAccountJsonModel cashJson)
+        public async Task<ActionResult<CashAccountJsonModel>> Create(CashAccountJsonModel cashJson)
         {
             if (cashJson == null)
             {
                 return BadRequest();
             }
-          // var cash = _mapper.Map<CashAccount>(cashJson);
+
+            var cash = _mapper.Map<CashAccountJsonModel, CashAccount>(cashJson);
+              
 
      //     await _cashAccountRepository.Create(cash);
            
-            return Ok(cashJson);
+            return Ok();
         }
     }
 }

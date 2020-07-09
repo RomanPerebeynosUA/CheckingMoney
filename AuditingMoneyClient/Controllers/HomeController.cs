@@ -14,42 +14,43 @@ using AuditingMoneyClient.Models.JsonModels;
 using Newtonsoft.Json;
 using AuditingMoneyClient.Core.Interfaces;
 using AuditingMoneyClient.Models.Balance;
+using AutoMapper;
 
 namespace AuditingMoneyClient.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IMapper _mapper;
+        private readonly IBalanceRepository _balanceRepository;
 
-        private readonly IAPIResponse<CashAccountJsonModel> _responseToAPI;
-        private readonly IEntityDeseralizeJson<BalanceJsonModel> _deseralizeBalanceJson;
-        private readonly IConvertBalance _convert;
 
         public HomeController(
+            IMapper mapper,
             ILogger<HomeController> logger, 
-            IAPIResponse<CashAccountJsonModel> responseToAPI,
-            IEntityDeseralizeJson<BalanceJsonModel> deseralizeBalanceJson,
-            IConvertBalance convert)
+            IBalanceRepository balanceRepository)        
         {
+            _mapper = mapper;
             _logger = logger;
-            _responseToAPI = responseToAPI;
-            _deseralizeBalanceJson = deseralizeBalanceJson;
-            _convert = convert;
+            _balanceRepository = balanceRepository;
         }
 
         public async Task<IActionResult> Index()
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");
 
-            var content = await _responseToAPI.ConnectToAPI("https://localhost:44382/Balance/Get", accessToken);
+            var content = await _balanceRepository.GetBalance("https://localhost:44382/Balance/Get", accessToken);
               
             if (content == null)
             {
                 return RedirectToAction("Logout", "Home");
             }
             else
-            {
-                return View(_convert.ConverListTo(_deseralizeBalanceJson.DeseralizeList(content)));
+            {               
+                var balast = _balanceRepository.DeseralizeBalances(content); 
+                List<BalanceViewModel> balanceViewModels = _mapper.Map<List<BalanceJsonModel>, List<BalanceViewModel>>(balast);
+
+                return View(balanceViewModels);
             }
            
         }        

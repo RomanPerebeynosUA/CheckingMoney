@@ -15,6 +15,10 @@ namespace AudititngMoneyAPI.Mapper
         {
             CreateMap <Balance, BalanceJsonModel>();
             CreateMap<CashAccount, CashAccountJsonModel>();
+
+            CreateMap<BalanceJsonModel, Balance>();
+            CreateMap<CashAccountJsonModel, CashAccount>();
+
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AuditingMoneyClient.Core.Interfaces;
 using AuditingMoneyClient.Models.Balance;
 using AuditingMoneyClient.Models.JsonModels;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -15,13 +16,14 @@ namespace AuditingMoneyClient.Controllers
 {
     public class CashAccountController : Controller
     {
-        private readonly IAPIResponse<CashAccountJsonModel> _apiResponse;
-        private readonly IConvertCashAccount _convert;
-        public CashAccountController(IConvertCashAccount convert, IAPIResponse<CashAccountJsonModel> apiResponse)
+       
+        private readonly ICashAccountRepository _cashAccount;
+        private readonly IMapper _mapper;
+        public CashAccountController(ICashAccountRepository cashAccount,
+            IMapper mapper)
         {
-
-            _convert = convert;
-            _apiResponse = apiResponse;
+            _cashAccount = cashAccount;
+            _mapper = mapper;         
         }
 
         public IActionResult Index()
@@ -31,23 +33,19 @@ namespace AuditingMoneyClient.Controllers
        
         [HttpGet]
         public IActionResult Create()
-        {
-
+        { 
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(CashAccountViewModel cashAccountViewModel)
-            //int balanceid)
+        public async Task<IActionResult> Create(CashAccountViewModel cashAccountViewModel)   
         {
             if (ModelState.IsValid)
             {
-              CashAccountJsonModel cashAccount = _convert.ConvertTo(cashAccountViewModel, 1);
                 var accessToken = await HttpContext.GetTokenAsync("access_token");
-              //  var content = new StringContent(JsonConvert.SerializeObject(cashAccount));
+                CashAccountJsonModel cashAccount = _mapper.Map <CashAccountViewModel, CashAccountJsonModel>(cashAccountViewModel);
+  
+                var result = await _cashAccount.CreateCashAccount("https://localhost:44382/CashAccount/Create", accessToken, cashAccount);
 
-                //var result = await _apiResponse.SendContentToAPI("https://localhost:44382/CreateCash", accessToken, content);
-
-                var result = await _apiResponse.SendObjToAPI("https://localhost:44382/CashAccount/PostCash", accessToken, cashAccount);
                 if (result.IsSuccessStatusCode)
                 {
                     return RedirectToAction(nameof(Index));

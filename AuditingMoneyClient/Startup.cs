@@ -64,21 +64,14 @@ namespace AuditingMoneyClient
                  //config.GetClaimsFromUserInfoEndpoint = true;
              });
             services.AddHttpClient();
-            services.AddHttpClient<IAPIResponse<CashAccountJsonModel>, APIResponse>();
-
+        
             services.AddControllersWithViews();
+
             services.AddAutoMapper( 
                 c=> c.AddProfile<DomainProfile>(), typeof(Startup));
 
-
-
-
-
-            services.AddTransient<IEntityDeseralizeJson<BalanceJsonModel>, BalanceRepository>();
-            services.AddTransient<IConvertBalance, BalanceRepository>();
-            services.AddTransient<IConvertCashAccount, CashAccountRepository>();
-
-
+            services.AddTransient<IBalanceRepository, BalanceRepository>();
+            services.AddTransient<ICashAccountRepository, CashAccountRepository>();
 
         }
 

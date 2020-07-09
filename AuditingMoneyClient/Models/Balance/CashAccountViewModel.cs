@@ -15,7 +15,9 @@ namespace AuditingMoneyClient.Models.Balance
 
         public string Note { get; set; }
 
- //       public string Currency { get; set; }
+        public int Balance_Id { get; set; }
+
+        //       public string Currency { get; set; }
 
     }
 }
