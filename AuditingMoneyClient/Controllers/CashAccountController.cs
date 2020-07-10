@@ -37,13 +37,14 @@ namespace AuditingMoneyClient.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(CashAccountViewModel cashAccountViewModel)   
+        public async Task<IActionResult> Create(CashAccountViewModel cashAccountViewModel, int id)   
         {
             if (ModelState.IsValid)
             {
                 var accessToken = await HttpContext.GetTokenAsync("access_token");
                 CashAccountJsonModel cashAccount = _mapper.Map <CashAccountViewModel, CashAccountJsonModel>(cashAccountViewModel);
-  
+                cashAccount.Balance_Id = id;
+
                 var result = await _cashAccount.CreateCashAccount("https://localhost:44382/CashAccount/Create", accessToken, cashAccount);
 
                 if (result.IsSuccessStatusCode)
