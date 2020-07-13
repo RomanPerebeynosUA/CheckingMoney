@@ -36,7 +36,7 @@ namespace AuditingMoneyClient.Controllers
 
             if (content == null)
             {
-                return RedirectToAction("Logout", "Home");
+                return RedirectToAction("Create", "Balance");
             }
             else
             {
@@ -57,16 +57,12 @@ namespace AuditingMoneyClient.Controllers
             var balanceViewModel = new BalanceViewModel();
             if (content == null)
             {   
-                return RedirectToAction("Logout", "Home");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
                 var kindOfCurrencies = _kindOfCurrencyRepository.DeseralizeKindOfCurrencies(content);
-                //List<string> NameOfCurencies = new List<string>();
-                //foreach(var c in kindOfCurrencies)
-                //{
-                //    NameOfCurencies.Add(c.Name);
-                //}
+                
                 balanceViewModel.Currencies = from NameOfCurency in kindOfCurrencies
                                               select new SelectListItem { Text = NameOfCurency.Name, Value = NameOfCurency.Name.ToString() };
 

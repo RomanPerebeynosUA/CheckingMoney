@@ -19,11 +19,14 @@ namespace AuditingMoneyAPI.Controllers
     {
         private readonly IBalanceRepository _balanceRepository;
         private readonly IMapper _mapper;
+        private readonly IKindOfCurrencyRepository _kindOfCurrencyRepository;
+
         public  BalanceController(IBalanceRepository balanceRepository,
-           IMapper mapper)
+           IMapper mapper, IKindOfCurrencyRepository kindOfCurrencyRepository)
         {
             _balanceRepository = balanceRepository;
             _mapper = mapper;
+            _kindOfCurrencyRepository = kindOfCurrencyRepository;
         }
       
         [HttpGet]
@@ -41,18 +44,23 @@ namespace AuditingMoneyAPI.Controllers
             }
         }
         [HttpPost]
-        public async Task<ActionResult<BalanceJsonModel>> Create(BalanceJsonModel balnceJson)
+        public async Task<ActionResult<BalanceJsonModel>> Create(BalanceJsonModel balanceJson)
         {
-            if (balnceJson == null) 
+            if (balanceJson == null) 
             {
                 return BadRequest();
             }
+           var kindOfCurrency = await  _kindOfCurrencyRepository.GetItemByName(balanceJson.Name);
 
-           var balance = _mapper.Map<BalanceJsonModel, Balance>(balnceJson);
+           var balance = _mapper.Map<BalanceJsonModel, Balance>(balanceJson);
            balance.UserId = GetUser_ID();
+            balance.DateCreated = DateTime.Now;
            await _balanceRepository.Create(balance);
 
-            return Ok();
+            await _balanceRepository.CreateComunication(
+               await _balanceRepository.GetItemByDateCreated(balance.DateCreated), kindOfCurrency);
+
+          return Ok();
         }
 
         private string GetUser_ID()

@@ -10,6 +10,7 @@ namespace AuditingMoneyCore.Interfaces
     {
         bool Exists(int id);
         Task<List<KindOfCurrency>> GetListItems();
+        Task<KindOfCurrency> GetItemByName(string name);
         Task<KindOfCurrency> GetItem(int id);
         
 

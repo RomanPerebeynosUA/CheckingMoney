@@ -19,15 +19,15 @@ namespace AuditingMoneyCore.Data
         }
         public DbSet<KindOfCurrency> KindOfCurrencies { get; set; }
         public DbSet<Balance> Balances { get; set; }
-        // public DbSet<BalanKindOfCurr> BalanKindOfCurrs { get; set; }
+        public DbSet<BalanKindOfCurr> BalanKindOfCurrs { get; set; }
 
         public DbSet<Expenses> Expenses { get; set; }
         public DbSet<ExpensesCategory> ExpensesCategories { get; set; }
-        //  public DbSet<ExpCategory> ExpCategories { get; set; }
+        public DbSet<ExpCategory> ExpCategories { get; set; }
 
         public DbSet<Income> Incomes { get; set; }
         public DbSet<IncomeCategory> IncomeCategories { get; set; }
-        //  public DbSet<IncCategory> IncCategories { get; set; }
+        public DbSet<IncCategory> IncCategories { get; set; }
 
         public DbSet<Transfer> Transfers { get; set; }
         public DbSet<TransferFrom> TransfersFrom { get; set; }

@@ -70,5 +70,19 @@ namespace AuditingMoneyCore.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public async Task CreateComunication(Balance balance, KindOfCurrency kindOfCurrency)
+        {
+            var balanKindOfCurr = new BalanKindOfCurr();
+            balanKindOfCurr.BalanceId = balance.Id;
+            balanKindOfCurr.KindOfCurrencyId = kindOfCurrency.Id;
+            _context.BalanKindOfCurrs.Add(balanKindOfCurr);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<Balance> GetItemByDateCreated(DateTime dateTime)
+        {
+            return await _context.Balances.FirstOrDefaultAsync(e => e.DateCreated == dateTime);
+        }
     }
 }

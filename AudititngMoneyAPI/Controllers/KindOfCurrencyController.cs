@@ -27,13 +27,13 @@ namespace AuditingMoneyAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            if (_kindOfCurrencyRepository.GetListItems() == null)
+            var  kindOfCurrencies = await _kindOfCurrencyRepository.GetListItems();
+            if (kindOfCurrencies == null)
             {
                 return null;
             }
             else
-            {
-                var kindOfCurrencies = await _kindOfCurrencyRepository.GetListItems();
+            {             
                 return new JsonResult(kindOfCurrencies);
             }
         }

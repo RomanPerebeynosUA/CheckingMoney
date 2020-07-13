@@ -53,5 +53,10 @@ namespace AuditingMoneyCore.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public async Task<KindOfCurrency> GetItemByName(string name)
+        {
+            return await _context.KindOfCurrencies.FirstOrDefaultAsync(e => e.Name == name);
+        }
     }
 }

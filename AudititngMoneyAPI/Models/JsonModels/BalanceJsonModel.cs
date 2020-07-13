@@ -9,7 +9,8 @@ namespace AuditingMoneyAPI.Models.JsonModels
     {
         public int Id { get; set; }
         public double Amount { get; set; }
-
+        public string Name { get; set; }
+        public DateTime DateCreated { get; set; }
         public string UserId { get; set; }
     }
 }

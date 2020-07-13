@@ -112,9 +112,9 @@ namespace IdentityServer.Controllers
         {
             var info = await _signInManager.GetExternalLoginInfoAsync();
 
-            if(info == null)
+            if (info == null)
             {
-                return Redirect("Login"); 
+                return Redirect("Login");
             }
 
             var result = await _signInManager.
@@ -126,7 +126,7 @@ namespace IdentityServer.Controllers
             }
             var username = info.Principal.FindFirst(ClaimTypes.Name.Replace(" ", "_")).Value;
 
-            return View("ExternalRegister", new ExternalRegisterViewModel 
+            return View("ExternalRegister", new ExternalRegisterViewModel
             {
                 Username = username,
                 ReturnUrl = returnUrl,
