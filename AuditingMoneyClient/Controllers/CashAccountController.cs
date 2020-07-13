@@ -17,18 +17,32 @@ namespace AuditingMoneyClient.Controllers
     public class CashAccountController : Controller
     {
        
-        private readonly ICashAccountRepository _cashAccount;
+        private readonly ICashAccountRepository _cashAccountRepository;
         private readonly IMapper _mapper;
-        public CashAccountController(ICashAccountRepository cashAccount,
+        public CashAccountController(ICashAccountRepository cashAccountRepository,
             IMapper mapper)
         {
-            _cashAccount = cashAccount;
+            _cashAccountRepository = cashAccountRepository;
             _mapper = mapper;         
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+
+            var content = await _cashAccountRepository.GetCashAccount("https://localhost:44382/CashAccount/Get", accessToken);
+
+            if (content == null)
+            {
+                return RedirectToAction("Logout", "Home");
+            }
+            else
+            {
+                var cashAccounts = _cashAccountRepository.DeseralizeCashAccounts(content);
+                List<CashAccountViewModel> CashAccountViewModels = _mapper.Map<List<CashAccountJsonModel>, List<CashAccountViewModel>>(cashAccounts);
+
+                return View(CashAccountViewModels);
+            }
         }
        
         [HttpGet]
@@ -45,7 +59,7 @@ namespace AuditingMoneyClient.Controllers
                 CashAccountJsonModel cashAccount = _mapper.Map <CashAccountViewModel, CashAccountJsonModel>(cashAccountViewModel);
                 cashAccount.Balance_Id = id;
 
-                var result = await _cashAccount.CreateCashAccount("https://localhost:44382/CashAccount/Create", accessToken, cashAccount);
+                var result = await _cashAccountRepository.CreateCashAccount("https://localhost:44382/CashAccount/Create", accessToken, cashAccount);
 
                 if (result.IsSuccessStatusCode)
                 {

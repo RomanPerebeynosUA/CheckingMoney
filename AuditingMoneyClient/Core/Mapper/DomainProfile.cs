@@ -19,6 +19,9 @@ namespace AuditingMoneyClient.Core.Mapper
             //CreateMap<List<BalanceJsonModel>, List<BalanceViewModel>>();
 
             CreateMap<CashAccountViewModel, CashAccountJsonModel>();
+            CreateMap<CashAccountJsonModel, CashAccountViewModel>();
+
+
         }
     }
 }

@@ -5,19 +5,16 @@ using System.Threading.Tasks;
 using AuditingMoneyCore.Data;
 using AuditingMoneyCore.Interfaces;
 using AuditingMoneyCore.Repositories;
-using AudititngMoneyAPI.Mapper;
+using AuditingMoneyAPI.Mapper;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
-namespace AudititngMoneyAPI
+namespace AuditingMoneyAPI
 {
     public class Startup
     {
@@ -61,6 +58,8 @@ namespace AudititngMoneyAPI
 
             services.AddTransient<IBalanceRepository, BalanceRepository>();
             services.AddTransient<ICashAccountRepository, CashAccountRepository>();
+            services.AddTransient<IKindOfCurrencyRepository, KindOfCurrencyRepository>();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

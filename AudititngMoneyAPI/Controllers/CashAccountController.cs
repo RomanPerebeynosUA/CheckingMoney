@@ -12,7 +12,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AudititngMoneyAPI.Controllers
+namespace AuditingMoneyAPI.Controllers
 {
    
     [Authorize]
@@ -37,12 +37,11 @@ namespace AudititngMoneyAPI.Controllers
         public async Task<ActionResult<CashAccountJsonModel>> Create(CashAccountJsonModel cashJson)
         {
             if (cashJson == null)
-            {
-                return BadRequest();
+            {     
+                return BadRequest();            
             }
 
             var cash = _mapper.Map<CashAccountJsonModel, CashAccount>(cashJson);
-              
 
      //     await _cashAccountRepository.Create(cash);
            

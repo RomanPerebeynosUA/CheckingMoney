@@ -7,6 +7,7 @@ namespace AuditingMoneyClient.Models.JsonModels
 {
     public class CashAccountJsonModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
 
         public double Amount { get; set; }

@@ -72,6 +72,7 @@ namespace AuditingMoneyClient
 
             services.AddTransient<IBalanceRepository, BalanceRepository>();
             services.AddTransient<ICashAccountRepository, CashAccountRepository>();
+            services.AddTransient<IKindOfCurrencyRepository, KindOfCurrencyRepository>();
 
         }
 

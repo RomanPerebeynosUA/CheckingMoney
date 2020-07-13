@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -15,5 +16,7 @@ namespace AuditingMoneyClient.Models.Balance
 
         [Display(Name = "Валюта")]
         public string Name { get; set; }
+
+        public IEnumerable<SelectListItem> Currencies { get; set; }
     }
 }

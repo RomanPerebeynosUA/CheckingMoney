@@ -43,7 +43,7 @@ namespace AuditingMoneyClient.Controllers
               
             if (content == null)
             {
-                return RedirectToAction("Logout", "Home");
+                return RedirectToAction("Create", "Balance");
             }
             else
             {               

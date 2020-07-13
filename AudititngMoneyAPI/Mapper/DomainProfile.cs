@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AudititngMoneyAPI.Mapper
+namespace AuditingMoneyAPI.Mapper
 {
     public class DomainProfile : Profile
     {
@@ -15,6 +15,7 @@ namespace AudititngMoneyAPI.Mapper
         {
             CreateMap <Balance, BalanceJsonModel>();
             CreateMap<CashAccount, CashAccountJsonModel>();
+            CreateMap<KindOfCurrency, KindOfCurrencyJsonModel>();
 
             CreateMap<BalanceJsonModel, Balance>();
             CreateMap<CashAccountJsonModel, CashAccount>();
