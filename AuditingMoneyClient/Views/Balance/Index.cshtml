@@ -1,20 +1,20 @@
-﻿@model IEnumerable<AuditingMoneyClient.Models.Balance.BalanceViewModel> 
-
+﻿@model IEnumerable<AuditingMoneyClient.Models.Balance.BalanceViewModel>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Home Page";
 }
+<a asp-controller="Balance" asp-action="Create">Створити баланс</a>
 
-<h1>Index</h1>
 
-@*<p>
-    <a asp-action="Create">Create New</a>
-</p>*@
+
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Amount)
             </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.UserId)
+                </th>*@ф
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -28,16 +28,23 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Amount)
                 </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.UserId)
+                    </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
-                </td>
 
-                @*<td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>*@
+                </td>
+                <td>
+                    <a asp-controller="CashAccount" asp-action="Create" asp-route-id="@item.Id">Створити рахунок</a>
+                </td>
+                <td>
+                    <a asp-controller="CashAccount" asp-action="Index" asp-route-id="@item.Id">Переглянути рахунки</a>
+                </td>
             </tr>
         }
     </tbody>
 </table>
+
+
+

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Http.ModelBinding;
 //using System.Web.Http;
 using AuditingMoney.Entity.Domain;
-using AuditingMoneyAPI.Models.JsonModels;
+using AuditingMoney.Entity.JsonModels;
 using AuditingMoneyCore.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -31,7 +31,23 @@ namespace AuditingMoneyAPI.Controllers
             _cashAccountRepository = cashAccountRepository;
             _mapper = mapper;
         }
+        [HttpGet]
+        public async Task<IActionResult> Get(int id)
+        {         
+            if (!_cashAccountRepository.ExistsByBalanceId(id))
+            {
+                return null;
+            }         
+            else
+            {
+                var cashAccounts = await _cashAccountRepository.GetListItems(id);
 
+                //List<CashAccountJsonModel> cashAccountJsonModels = _mapper.Map<List<CashAccountJsonModel>,
+                //   List<CashAccount>>(cashAccounts);
+
+                return new JsonResult(cashAccounts);
+            }
+        }
 
         [HttpPost]
         public async Task<ActionResult<CashAccountJsonModel>> Create(CashAccountJsonModel cashJson)
@@ -43,8 +59,23 @@ namespace AuditingMoneyAPI.Controllers
 
             var cash = _mapper.Map<CashAccountJsonModel, CashAccount>(cashJson);
 
-     //     await _cashAccountRepository.Create(cash);
+            await _cashAccountRepository.Create(cash);
            
+            return Ok();
+        }
+        [HttpPut]
+        public async Task<ActionResult<CashAccountJsonModel>> Update(CashAccountJsonModel cashAccountJson)
+        {
+            if (cashAccountJson == null)
+            {
+                return BadRequest();
+            }
+            if (!_cashAccountRepository.Exists(cashAccountJson.Id))
+            {
+                return NotFound();
+            }
+            var cashAccount = _mapper.Map<CashAccountJsonModel, CashAccount>(cashAccountJson);
+            await _cashAccountRepository.Update(cashAccount);
             return Ok();
         }
     }

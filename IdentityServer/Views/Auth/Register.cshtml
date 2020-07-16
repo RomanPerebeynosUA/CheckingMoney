@@ -1,26 +1,25 @@
 ﻿@model RegisterViewModel
 
-<html>
-<head>
-    @*<link href ="~/css/main.css" rel="stylesheet" type="text/css"/>
-    <script src ="~/js/main.js"></script>*@
-</head>
-<body>
     <form asp-contoller="Auth" asp-action="Register" method="post">
         <input type="hidden" asp-for="ReturnUrl" />
+        @*<div>
+            <label asp-for="Email"></label><br />
+            <input asp-for="Email" />
+            <span asp-validation-for="Email"></span>
+        </div>*@
         <div>
-            <label>Username</label>
+            <label asp-for="Username"></label><br />
             <input asp-for="Username" />
             <span asp-validation-for="Username"></span>
 
         </div>
         <div>
-            <label>Password</label>
+            <label asp-for="Password"></label><br />
             <input asp-for="Password" />
             <span asp-validation-for="Password"></span>
         </div>
         <div>
-            <label>Password</label>
+            <label asp-for="ConfirmPassword"></label><br />
             <input asp-for="ConfirmPassword" />
             <span asp-validation-for="ConfirmPassword"></span>
         </div>
@@ -32,7 +31,5 @@
         <a asp-controller="Auth" asp-action="Login"
            asp-route-returnUrl="@Model.ReturnUrl">Back to Login</a>
     </div>
-</body>
-</html>
 
 

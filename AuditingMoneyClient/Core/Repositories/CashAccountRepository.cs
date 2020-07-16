@@ -42,6 +42,7 @@ namespace AuditingMoneyClient.Core.Repositories
         public List<CashAccountJsonModel> DeseralizeCashAccounts(string json)
         {
             var cashAccounts = JsonConvert.DeserializeObject<List<CashAccountJsonModel>>(json);
+        
             return cashAccounts;
         }
 

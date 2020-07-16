@@ -32,7 +32,8 @@ namespace AuditingMoneyClient.Controllers
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");
 
-            var content = await _balanceRepository.GetBalance("https://localhost:44382/Balance/Get", accessToken);
+            var content = await _balanceRepository.GetBalance(
+                "https://localhost:44382/Balance/Get", accessToken);
 
             if (content == null)
             {
@@ -55,9 +56,9 @@ namespace AuditingMoneyClient.Controllers
             var content = await _kindOfCurrencyRepository.
                 GetKindOfCurrency("https://localhost:44382/KindOfCurrency/Get", accessToken);
             var balanceViewModel = new BalanceViewModel();
-            if (content == null)
-            {   
-                return RedirectToAction("Index", "Home");
+            if (content == "Unauthorized")
+            {                
+             return RedirectToAction("Logout", "Home");
             }
             else
             {
@@ -83,7 +84,7 @@ namespace AuditingMoneyClient.Controllers
 
                 if (result.IsSuccessStatusCode)
                 {
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Index", "Balance");
                 }
             }
             return View(balanceViewModel);

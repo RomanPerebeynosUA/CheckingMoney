@@ -1,4 +1,5 @@
 ﻿using AuditingMoney.Entity.Domain.BalanceEntity;
+using AuditingMoney.Entity.JsonModels;
 using AuditingMoneyCore.Data;
 using AuditingMoneyCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -39,11 +40,11 @@ namespace AuditingMoneyCore.Repositories
             return await _context.Balances.FirstOrDefaultAsync(e => e.UserId == id);
         }
 
-        public async Task<List<Balance>> GetListItems()
+        public async Task<IEnumerable<Balance>> GetListItems()
         {
             return await _context.Balances.ToListAsync();          
         }
-        public async Task<List<Balance>> GetListItems(string id)
+        public async Task<IEnumerable<Balance>> GetListItems(string id)
         {
             return await _context.Balances.Where(e => e.UserId == id).ToListAsync();
         }
@@ -83,6 +84,33 @@ namespace AuditingMoneyCore.Repositories
         public async Task<Balance> GetItemByDateCreated(DateTime dateTime)
         {
             return await _context.Balances.FirstOrDefaultAsync(e => e.DateCreated == dateTime);
+        }
+        
+        public IEnumerable<BalanceJsonModel> GetBalancesForView(string id)
+        {
+            List<BalanceJsonModel> jsonModels = new List<BalanceJsonModel>();
+            var balances = from b in _context.Balances
+                           join bk in _context.BalanKindOfCurrs on b.Id equals bk.BalanceId
+                           join k in _context.KindOfCurrencies on bk.KindOfCurrencyId equals k.Id
+                           where (b.UserId == id)
+                           select new
+                           {
+                               User_id = b.UserId,
+                               Id = b.Id,
+                               Amount = b.Amount,
+                               Name = k.Name
+                           };
+
+            foreach (var b in balances)
+            {
+                var balance = new BalanceJsonModel();
+                balance.Id = b.Id;
+                balance.UserId = b.User_id;
+                balance.Amount = b.Amount;
+                balance.Name = b.Name;
+                jsonModels.Add(balance);
+            }
+            return jsonModels;
         }
     }
 }

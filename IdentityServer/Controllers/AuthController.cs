@@ -56,13 +56,14 @@ namespace IdentityServer.Controllers
             {
                 var result = await _signInManager.PasswordSignInAsync(
                            vm.Username, vm.Password, false, false);
-
-
-                        
+     
                 if (result.Succeeded)
                 {
-                    //var id = _userManager.GetUserId(User);
                     return Redirect(vm.ReturnUrl);
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Неправильний логін і (або) пароль");
                 }
             }
             return View(vm);

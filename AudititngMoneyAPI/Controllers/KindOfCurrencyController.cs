@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Http.ModelBinding;
 //using System.Web.Http;
 using AuditingMoney.Entity.Domain;
-using AuditingMoneyAPI.Models.JsonModels;
+using AuditingMoney.Entity.JsonModels;
 using AuditingMoneyCore.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -28,6 +28,7 @@ namespace AuditingMoneyAPI.Controllers
         public async Task<IActionResult> Get()
         {
             var  kindOfCurrencies = await _kindOfCurrencyRepository.GetListItems();
+
             if (kindOfCurrencies == null)
             {
                 return null;

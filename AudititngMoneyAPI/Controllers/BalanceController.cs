@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AuditingMoney.Entity.Domain.BalanceEntity;
-using AuditingMoneyAPI.Models.JsonModels;
+using AuditingMoney.Entity.JsonModels;
 using AuditingMoneyCore.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
@@ -39,12 +39,14 @@ namespace AuditingMoneyAPI.Controllers
             }
             else
             {
-                var balances =  await _balanceRepository.GetListItems(user_id);
+                // var balances =  await _balanceRepository.GetListItems(user_id);
+                var balances = _balanceRepository.GetBalancesForView(user_id);
+
                 return new JsonResult(balances); 
             }
         }
         [HttpPost]
-        public async Task<ActionResult<BalanceJsonModel>> Create(BalanceJsonModel balanceJson)
+        public async Task<IActionResult> Create(BalanceJsonModel balanceJson)
         {
             if (balanceJson == null) 
             {
@@ -61,6 +63,33 @@ namespace AuditingMoneyAPI.Controllers
                await _balanceRepository.GetItemByDateCreated(balance.DateCreated), kindOfCurrency);
 
           return Ok();
+        }
+        [HttpPut]
+        public async Task<IActionResult> Update(BalanceJsonModel balanceJson)
+        {
+            if (balanceJson == null)
+            {
+                return BadRequest();
+            }
+            if (!_balanceRepository.Exists(balanceJson.Id))
+            {
+                return NotFound();
+            }
+            var balance = _mapper.Map<BalanceJsonModel, Balance>(balanceJson);
+            await _balanceRepository.Update(balance);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            Balance balance = await _balanceRepository.GetItem(id);
+            if (balance == null)
+            {
+                return NotFound();
+            }
+           await _balanceRepository.Remove(balance);
+            return Ok();
         }
 
         private string GetUser_ID()

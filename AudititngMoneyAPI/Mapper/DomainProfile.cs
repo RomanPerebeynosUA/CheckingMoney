@@ -1,6 +1,6 @@
 ﻿using AuditingMoney.Entity.Domain;
 using AuditingMoney.Entity.Domain.BalanceEntity;
-using AuditingMoneyAPI.Models.JsonModels;
+using AuditingMoney.Entity.JsonModels;
 using AutoMapper;
 using System;
 using System.Collections.Generic;

@@ -25,7 +25,7 @@ namespace AuditingMoneyCore.Repositories
 
         public bool ExistsByBalanceId(int id)
         {
-            return _context.CashAccounts.Any(e => e.Balance.Id == id);
+            return _context.CashAccounts.Any(e => e.Balance_Id == id);
         }
 
        
@@ -36,7 +36,7 @@ namespace AuditingMoneyCore.Repositories
 
         public async Task<CashAccount> GetItemByBalanceId(int id)
         {
-            return await _context.CashAccounts.FirstOrDefaultAsync(e => e.Balance.Id == id);
+            return await _context.CashAccounts.FirstOrDefaultAsync(e => e.Balance_Id == id);
         }
 
         public async Task<List<CashAccount>> GetListItems()
@@ -46,7 +46,7 @@ namespace AuditingMoneyCore.Repositories
 
         public async  Task<List<CashAccount>> GetListItems(int id)
         {
-           return await _context.CashAccounts.Where(e => e.Balance.Id == id).ToListAsync();
+           return await _context.CashAccounts.Where(e => e.Balance_Id == id).ToListAsync();
         }
 
         public async Task Remove(CashAccount entity)

@@ -35,24 +35,9 @@ namespace AuditingMoneyClient.Controllers
             _balanceRepository = balanceRepository;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var accessToken = await HttpContext.GetTokenAsync("access_token");
-
-            var content = await _balanceRepository.GetBalance("https://localhost:44382/Balance/Get", accessToken);
-              
-            if (content == null)
-            {
-                return RedirectToAction("Create", "Balance");
-            }
-            else
-            {               
-                var balast = _balanceRepository.DeseralizeBalances(content); 
-                List<BalanceViewModel> balanceViewModels = _mapper.Map<List<BalanceJsonModel>, List<BalanceViewModel>>(balast);
-
-                return View(balanceViewModels);
-            }
-           
+            return View();
         }        
         public IActionResult Logout()
         {

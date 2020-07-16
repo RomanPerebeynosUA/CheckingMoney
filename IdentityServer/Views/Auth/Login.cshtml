@@ -15,14 +15,18 @@
 
 <form asp-controller="Auth" asp-action="Login" method="post">
     <input type="hidden" asp-for="ReturnUrl" />
+
     <div>
-        <label>Username</label>
+        <label asp-for="Username"></label><br />
         <input asp-for="Username" />
+        <span asp-validation-for="Username"></span>
     </div>
     <div>
-        <label>Password</label>
+        <label asp-for="Password"></label><br />
         <input asp-for="Password" />
+        <span asp-validation-for="Password"></span>
     </div>
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
     <div>
         <button type="submit">Sign In</button>
     </div>
@@ -31,3 +35,4 @@
            asp-route-returnUrl="@Model.ReturnUrl">Register</a>
     </div>
 </form>
+

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AuditingMoneyAPI.Models.JsonModels
+namespace AuditingMoney.Entity.JsonModels
 {
     public class CashAccountJsonModel
     {
@@ -15,7 +15,6 @@ namespace AuditingMoneyAPI.Models.JsonModels
         public string Note { get; set; }
 
         public int Balance_Id { get; set; }
-
 
     }
 }

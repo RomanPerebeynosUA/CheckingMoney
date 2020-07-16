@@ -52,7 +52,7 @@ namespace AuditingMoneyClient.Core.Repositories
             var response = await client.GetAsync(url);
             if (!response.IsSuccessStatusCode)
             {
-                return null;
+                return response.StatusCode.ToString();
             }
             var result = await response.Content.ReadAsStringAsync();
             return result;

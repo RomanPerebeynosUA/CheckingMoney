@@ -1,50 +1,8 @@
-﻿@model IEnumerable<AuditingMoneyClient.Models.Balance.BalanceViewModel>
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
-<a asp-controller="Balance" asp-action="Create">Створити баланс</a>
+<a asp-controller="Balance" asp-action="Index">Переглянути  баланси</a>
 
-
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-
-            </td>
-            @*<td>
-                <a asp-controller="Balance" asp-action="Index" asp-route-id="@item.UserId">Переглянути баланс</a>
-            </td>*@
-            <td>
-                <a asp-controller="CashAccount" asp-action="Create" asp-route-id="@item.Id">Додати рахунок</a>
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
 
 
 
