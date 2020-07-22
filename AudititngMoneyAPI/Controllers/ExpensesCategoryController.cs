@@ -4,39 +4,39 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http.ModelBinding;
-//using System.Web.Http;
 using AuditingMoney.Entity.Domain;
 using AuditingMoney.Entity.JsonModels;
 using AuditingMoneyCore.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 namespace AuditingMoneyAPI.Controllers
 {
     [Authorize]
     [ApiController]
     [Route("[controller]/[action]")]
-    public class KindOfCurrencyController : ControllerBase
+    public class ExpensesCategoryController : ControllerBase
     {
-        private readonly IKindOfCurrencyRepository _kindOfCurrencyRepository;
+        private readonly IExpensesCategoryRepository _expensesCategoryRepository;
 
-        public KindOfCurrencyController(IKindOfCurrencyRepository kindOfCurrencyRepository)
+        public ExpensesCategoryController(IExpensesCategoryRepository  expensesCategoryRepository)
         {
-            _kindOfCurrencyRepository = kindOfCurrencyRepository;
+            _expensesCategoryRepository = expensesCategoryRepository;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var  kindOfCurrencies = await _kindOfCurrencyRepository.GetListItems();
+            var expensesCategories = await _expensesCategoryRepository.GetListItems();
 
-            if (kindOfCurrencies == null)
+            if (expensesCategories == null)
             {
                 return null;
             }
             else
-            {             
-                return new JsonResult(kindOfCurrencies);
+            {
+                return new JsonResult(expensesCategories);
             }
         }
     }

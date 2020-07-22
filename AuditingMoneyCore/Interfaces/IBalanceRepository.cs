@@ -25,6 +25,5 @@ namespace AuditingMoneyCore.Interfaces
         Task Remove(Balance entity);
         Task Update(Balance entity);
 
-        IQueryable<Balance> GetEntityNoAsyncListItems();
     }
 }

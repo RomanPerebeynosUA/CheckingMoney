@@ -1,5 +1,7 @@
 ﻿using AuditingMoney.Entity.Domain.ExpensesEntity;
+using AuditingMoneyCore.Data;
 using AuditingMoneyCore.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,39 +12,73 @@ namespace AuditingMoneyCore.Repositories
 {
     public class ExpensesRepository : IExpensesRepository
     {
+        private readonly AuditingDbContext _context;
+        public ExpensesRepository(AuditingDbContext context)
+        {
+            _context = context;
+        }
+
         public bool Exists(int id)
         {
-            throw new NotImplementedException();
+            return _context.Expenses.Any(e => e.Id == id);
         }
 
-        public IQueryable<Expenses> GetEntityNoAsyncListItems()
+        public bool ExistsByCashAccountId(int id)
         {
-            throw new NotImplementedException();
+            return _context.Expenses.Any(e => e.CashAccount.Id == id);
         }
 
-        public Task<Expenses> GetItem(int id)
+        public async Task<Expenses> GetItem(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Expenses.
+                FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public Task<List<Expenses>> GetListItems()
+        public async Task<List<Expenses>> GetListItems()
         {
-            throw new NotImplementedException();
+            return await _context.Expenses.ToListAsync();
         }
 
-        public Task RemoveEntity(Expenses entity)
+        public async Task<List<Expenses>> GetListItems(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Expenses.
+                Where(e => e.CashAccount.Id == id).ToListAsync();
         }
 
-        public Task SaveEntity(Expenses entity)
+        public async Task Remove(Expenses entity)
         {
-            throw new NotImplementedException();
+            _context.Expenses.Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdateEntity(Expenses entity)
+        public async Task Create(Expenses entity)
         {
-            throw new NotImplementedException();
+            _context.Expenses.Remove(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Update(Expenses entity)
+        {
+            _context.Expenses.Remove(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task CreateComunication(Expenses expenses, 
+            ExpensesCategory expensesCategory)
+        {
+            var expCategory = new ExpCategory() 
+            {
+                ExpensesId = expenses.Id,
+                ExpensesCategoryId = expensesCategory.Id
+            };
+
+            _context.ExpCategories.Add(expCategory);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<Expenses> GetItemByDate(DateTime dateTime)
+        {
+            return await _context.Expenses.FirstOrDefaultAsync(e => e.Date == dateTime);
         }
     }
 }

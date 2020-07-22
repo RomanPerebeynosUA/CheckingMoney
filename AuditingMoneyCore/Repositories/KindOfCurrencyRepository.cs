@@ -49,11 +49,6 @@ namespace AuditingMoneyCore.Repositories
             await _context.SaveChangesAsync();
         }
         
-        public IQueryable<KindOfCurrency> GetEntityNoAsyncListItems()
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<KindOfCurrency> GetItemByName(string name)
         {
             return await _context.KindOfCurrencies.FirstOrDefaultAsync(e => e.Name == name);

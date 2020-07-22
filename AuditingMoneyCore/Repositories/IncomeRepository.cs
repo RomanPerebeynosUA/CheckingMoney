@@ -1,5 +1,7 @@
 ﻿using AuditingMoney.Entity.Domain.IncomeEntity;
+using AuditingMoneyCore.Data;
 using AuditingMoneyCore.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,39 +12,42 @@ namespace AuditingMoneyCore.Repositories
 {
     public class IncomeRepository : IIncomeRepository
     {
+        private readonly AuditingDbContext _context;
+        public IncomeRepository(AuditingDbContext context)
+        {
+            _context = context;
+        }
+
         public bool Exists(int id)
         {
-            throw new NotImplementedException();
+            return _context.Incomes.Any(e => e.Id == id);
+        }
+        public async Task<Income> GetItem(int id)
+        {
+            return await _context.Incomes.FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public IQueryable<Income> GetEntityNoAsyncListItems()
+        public async Task<List<Income>> GetListItems()
         {
-            throw new NotImplementedException();
+            return await _context.Incomes.ToListAsync();
         }
 
-        public Task<Income> GetItem(int id)
+        public async Task RemoveEntity(Income entity)
         {
-            throw new NotImplementedException();
+            _context.Incomes.Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<List<Income>> GetListItems()
+        public async Task SaveEntity(Income entity)
         {
-            throw new NotImplementedException();
+            _context.Incomes.Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public Task RemoveEntity(Income entity)
+        public async Task UpdateEntity(Income entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task SaveEntity(Income entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateEntity(Income entity)
-        {
-            throw new NotImplementedException();
+            _context.Incomes.Remove(entity);
+            await _context.SaveChangesAsync();
         }
     }
 }

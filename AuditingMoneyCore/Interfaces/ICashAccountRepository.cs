@@ -23,6 +23,5 @@ namespace AuditingMoneyCore.Interfaces
         Task Remove(CashAccount entity);
         Task Update(CashAccount entity);
 
-        IQueryable<CashAccount> GetEntityNoAsyncListItems();
     }
 }

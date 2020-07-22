@@ -1,5 +1,6 @@
 ﻿using AuditingMoney.Entity.Domain;
 using AuditingMoney.Entity.Domain.BalanceEntity;
+using AuditingMoney.Entity.Domain.ExpensesEntity;
 using AuditingMoney.Entity.JsonModels;
 using AutoMapper;
 using System;
@@ -14,11 +15,24 @@ namespace AuditingMoneyAPI.Mapper
         public DomainProfile()
         {
             CreateMap <Balance, BalanceJsonModel>();
-            CreateMap<CashAccount, CashAccountJsonModel>();
-            CreateMap<KindOfCurrency, KindOfCurrencyJsonModel>();
-
             CreateMap<BalanceJsonModel, Balance>();
+
+            CreateMap<KindOfCurrency, KindOfCurrencyJsonModel>();
+            CreateMap<KindOfCurrencyJsonModel, KindOfCurrency>();
+
+            CreateMap<CashAccount, CashAccountJsonModel>();
             CreateMap<CashAccountJsonModel, CashAccount>();
+
+            CreateMap<Expenses,ExpensesJsonModel>();
+            CreateMap<ExpensesJsonModel, Expenses>();
+
+            CreateMap<ExpensesCategory, ExpensesCategoryJsonModel>();
+            CreateMap<ExpensesCategoryJsonModel, ExpensesCategory>();
+
+
+
+
+
 
         }
     }

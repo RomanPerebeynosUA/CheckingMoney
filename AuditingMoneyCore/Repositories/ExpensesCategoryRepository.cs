@@ -1,5 +1,7 @@
 ﻿using AuditingMoney.Entity.Domain.ExpensesEntity;
+using AuditingMoneyCore.Data;
 using AuditingMoneyCore.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,39 +12,47 @@ namespace AuditingMoneyCore.Repositories
 {
     public class ExpensesCategoryRepository : IExpensesCategoryRepository
     {
+        private readonly AuditingDbContext _context;
+        public ExpensesCategoryRepository(AuditingDbContext context)
+        {
+            _context = context;
+        }
+
         public bool Exists(int id)
         {
-            throw new NotImplementedException();
+            return _context.ExpensesCategories.Any(e => e.Id == id);
+        }
+        public async  Task<ExpensesCategory> GetItem(int id)
+        {
+            return await _context.ExpensesCategories.FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public IQueryable<ExpensesCategory> GetEntityNoAsyncListItems()
+        public async Task<ExpensesCategory> GetItemByName(string name)
         {
-            throw new NotImplementedException();
+            return await _context.ExpensesCategories.FirstOrDefaultAsync(e => e.Name == name);
         }
 
-        public Task<ExpensesCategory> GetItem(int id)
+        public async Task<List<ExpensesCategory>> GetListItems()
         {
-            throw new NotImplementedException();
+            return await _context.ExpensesCategories.ToListAsync();
         }
 
-        public Task<List<ExpensesCategory>> GetListItems()
+        public async Task RemoveEntity(ExpensesCategory entity)
         {
-            throw new NotImplementedException();
+            _context.ExpensesCategories.Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public Task RemoveEntity(ExpensesCategory entity)
+        public async Task SaveEntity(ExpensesCategory entity)
         {
-            throw new NotImplementedException();
+            _context.ExpensesCategories.Add(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public Task SaveEntity(ExpensesCategory entity)
+        public async Task UpdateEntity(ExpensesCategory entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateEntity(ExpensesCategory entity)
-        {
-            throw new NotImplementedException();
+            _context.ExpensesCategories.Update(entity);
+            await _context.SaveChangesAsync();
         }
     }
 }

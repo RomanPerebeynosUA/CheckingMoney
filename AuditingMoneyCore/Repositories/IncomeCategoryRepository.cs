@@ -1,5 +1,7 @@
 ﻿using AuditingMoney.Entity.Domain.IncomeEntity;
+using AuditingMoneyCore.Data;
 using AuditingMoneyCore.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,39 +12,48 @@ namespace AuditingMoneyCore.Repositories
 {
     public class IncomeCategoryRepository : IIncomeCategoryRepository
     {
+        private readonly AuditingDbContext _context;
+        public IncomeCategoryRepository(AuditingDbContext context)
+        {
+            _context = context;
+        }
+
         public bool Exists(int id)
         {
-            throw new NotImplementedException();
+            return _context.IncomeCategories.Any(e => e.Id == id);
         }
 
-        public IQueryable<IncomeCategory> GetEntityNoAsyncListItems()
+        public async Task<IncomeCategory> GetItem(int id)
         {
-            throw new NotImplementedException();
+            return await _context.IncomeCategories.FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public Task<IncomeCategory> GetItem(int id)
+        public async Task<IncomeCategory> GetItemByName(string name)
         {
-            throw new NotImplementedException();
+            return await _context.IncomeCategories.FirstOrDefaultAsync(e => e.Name == name);
         }
 
-        public Task<List<IncomeCategory>> GetListItems()
+        public async Task<List<IncomeCategory>> GetListItems()
         {
-            throw new NotImplementedException();
+            return await _context.IncomeCategories.ToListAsync();
         }
 
-        public Task RemoveEntity(IncomeCategory entity)
+        public async Task RemoveEntity(IncomeCategory entity)
         {
-            throw new NotImplementedException();
+            _context.IncomeCategories.Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public Task SaveEntity(IncomeCategory entity)
+        public async Task SaveEntity(IncomeCategory entity)
         {
-            throw new NotImplementedException();
+            _context.IncomeCategories.Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdateEntity(IncomeCategory entity)
+        public async Task UpdateEntity(IncomeCategory entity)
         {
-            throw new NotImplementedException();
+            _context.IncomeCategories.Remove(entity);
+            await _context.SaveChangesAsync();
         }
     }
 }

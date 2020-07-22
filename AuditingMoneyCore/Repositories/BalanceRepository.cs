@@ -27,9 +27,7 @@ namespace AuditingMoneyCore.Repositories
         {
             return _context.Balances.Any(e => e.UserId == id);
         }
-
-      
-
+    
         public async Task<Balance> GetItem(int id)
         {
             return await _context.Balances.FirstOrDefaultAsync(e => e.Id == id);
@@ -67,16 +65,13 @@ namespace AuditingMoneyCore.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public IQueryable<Balance> GetEntityNoAsyncListItems()
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task CreateComunication(Balance balance, KindOfCurrency kindOfCurrency)
         {
-            var balanKindOfCurr = new BalanKindOfCurr();
-            balanKindOfCurr.BalanceId = balance.Id;
-            balanKindOfCurr.KindOfCurrencyId = kindOfCurrency.Id;
+            var balanKindOfCurr = new BalanKindOfCurr() 
+            {
+                BalanceId = balance.Id,
+                KindOfCurrencyId = kindOfCurrency.Id
+            };
             _context.BalanKindOfCurrs.Add(balanKindOfCurr);
             await _context.SaveChangesAsync();
         }
@@ -103,11 +98,13 @@ namespace AuditingMoneyCore.Repositories
 
             foreach (var b in balances)
             {
-                var balance = new BalanceJsonModel();
-                balance.Id = b.Id;
-                balance.UserId = b.User_id;
-                balance.Amount = b.Amount;
-                balance.Name = b.Name;
+                var balance = new BalanceJsonModel() 
+                {
+                    Id = b.Id,
+                    UserId = b.User_id,
+                    Amount = b.Amount,
+                    Name = b.Name
+                };
                 jsonModels.Add(balance);
             }
             return jsonModels;

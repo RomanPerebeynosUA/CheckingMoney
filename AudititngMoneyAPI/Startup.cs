@@ -60,6 +60,13 @@ namespace AuditingMoneyAPI
             services.AddTransient<ICashAccountRepository, CashAccountRepository>();
             services.AddTransient<IKindOfCurrencyRepository, KindOfCurrencyRepository>();
 
+            services.AddTransient<IExpensesCategoryRepository, ExpensesCategoryRepository>();
+            services.AddTransient<IExpensesRepository, ExpensesRepository>();
+
+            services.AddTransient<IIncomeCategoryRepository, IncomeCategoryRepository>();
+            services.AddTransient<IIncomeRepository, IncomeRepository>();
+
+            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -13,10 +13,7 @@ namespace AuditingMoneyClient.Core.Mapper
         public DomainProfile()
         {
             CreateMap<BalanceViewModel, BalanceJsonModel>();
-            CreateMap<BalanceJsonModel, BalanceViewModel>();
-
-            //CreateMap<List<BalanceViewModel>, List<BalanceJsonModel>>();
-            //CreateMap<List<BalanceJsonModel>, List<BalanceViewModel>>();
+            CreateMap<BalanceJsonModel, BalanceViewModel>();        
 
             CreateMap<CashAccountViewModel, CashAccountJsonModel>();
             CreateMap<CashAccountJsonModel, CashAccountViewModel>();

@@ -10,11 +10,14 @@ namespace AuditingMoneyCore.Interfaces
    public interface IExpensesCategoryRepository
     {
         bool Exists(int id);
+
         Task<List<ExpensesCategory>> GetListItems();
         Task<ExpensesCategory> GetItem(int id);
+        Task<ExpensesCategory> GetItemByName(string name);
+
         Task SaveEntity(ExpensesCategory entity);
         Task RemoveEntity(ExpensesCategory entity);
         Task UpdateEntity(ExpensesCategory entity);
-        IQueryable<ExpensesCategory> GetEntityNoAsyncListItems();
+
     }
 }

@@ -66,10 +66,5 @@ namespace AuditingMoneyCore.Repositories
             _context.CashAccounts.Update(entity);
             await _context.SaveChangesAsync();
         }
-
-        public IQueryable<CashAccount> GetEntityNoAsyncListItems()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

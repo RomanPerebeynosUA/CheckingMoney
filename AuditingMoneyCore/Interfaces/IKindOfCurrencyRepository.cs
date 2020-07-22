@@ -17,8 +17,6 @@ namespace AuditingMoneyCore.Interfaces
         Task Create(KindOfCurrency entity);
         Task Remove(KindOfCurrency entity);
         Task Update(KindOfCurrency entity);
-
-       
-        IQueryable<KindOfCurrency> GetEntityNoAsyncListItems();
+        
     }
 }

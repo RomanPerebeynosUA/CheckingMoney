@@ -99,6 +99,5 @@ namespace AuditingMoneyAPI.Controllers
                 .Value.ToString();
             return user_id;
         }
-
     }
 }

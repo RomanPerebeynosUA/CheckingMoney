@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http.ModelBinding;
-//using System.Web.Http;
 using AuditingMoney.Entity.Domain;
 using AuditingMoney.Entity.JsonModels;
 using AuditingMoneyCore.Interfaces;
@@ -21,17 +20,18 @@ namespace AuditingMoneyAPI.Controllers
     public class CashAccountController : ControllerBase
     {
      
-        private readonly IBalanceRepository _balanceRepository;
+     //   private readonly IBalanceRepository _balanceRepository;
         private readonly ICashAccountRepository _cashAccountRepository;
         private readonly IMapper _mapper;
-        public CashAccountController(IBalanceRepository balanceRepository,
-            ICashAccountRepository cashAccountRepository, IMapper mapper)
+        public CashAccountController(
+            ICashAccountRepository cashAccountRepository, 
+            IMapper mapper)
         {
-            _balanceRepository = balanceRepository;
             _cashAccountRepository = cashAccountRepository;
             _mapper = mapper;
         }
-        [HttpGet]
+
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {         
             if (!_cashAccountRepository.ExistsByBalanceId(id))
@@ -41,10 +41,6 @@ namespace AuditingMoneyAPI.Controllers
             else
             {
                 var cashAccounts = await _cashAccountRepository.GetListItems(id);
-
-                //List<CashAccountJsonModel> cashAccountJsonModels = _mapper.Map<List<CashAccountJsonModel>,
-                //   List<CashAccount>>(cashAccounts);
-
                 return new JsonResult(cashAccounts);
             }
         }
@@ -76,6 +72,17 @@ namespace AuditingMoneyAPI.Controllers
             }
             var cashAccount = _mapper.Map<CashAccountJsonModel, CashAccount>(cashAccountJson);
             await _cashAccountRepository.Update(cashAccount);
+            return Ok();
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            CashAccount cashAccount = await _cashAccountRepository.GetItem(id);
+            if (cashAccount == null)
+            {
+                return NotFound();
+            }
+            await _cashAccountRepository.Remove(cashAccount);
             return Ok();
         }
     }
