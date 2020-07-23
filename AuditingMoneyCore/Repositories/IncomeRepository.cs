@@ -22,6 +22,10 @@ namespace AuditingMoneyCore.Repositories
         {
             return _context.Incomes.Any(e => e.Id == id);
         }
+        public bool ExistsByCashAccountId(int id)
+        {
+            return _context.Incomes.Any(e => e.CashAccount.Id == id);
+        }
         public async Task<Income> GetItem(int id)
         {
             return await _context.Incomes.FirstOrDefaultAsync(e => e.Id == id);
@@ -31,22 +35,43 @@ namespace AuditingMoneyCore.Repositories
         {
             return await _context.Incomes.ToListAsync();
         }
+        public async Task<List<Income>> GetListItems(int id)
+        {
+            return await _context.Incomes.
+                Where(e => e.CashAccount.Id == id).ToListAsync();
 
-        public async Task RemoveEntity(Income entity)
+        }
+        public async Task Remove(Income entity)
         {
             _context.Incomes.Remove(entity);
             await _context.SaveChangesAsync();
         }
 
-        public async Task SaveEntity(Income entity)
+        public async Task Create(Income entity)
         {
-            _context.Incomes.Remove(entity);
+            _context.Incomes.Add(entity);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateEntity(Income entity)
+        public async Task Update(Income entity)
         {
-            _context.Incomes.Remove(entity);
+            _context.Incomes.Update(entity);
+            await _context.SaveChangesAsync();
+        }   
+        public async Task<Income> GetItemByDate(DateTime dateTime)
+        {
+            return await _context.Incomes.FirstOrDefaultAsync(e => e.Date == dateTime);
+        }
+
+        public async Task CreateComunication(Income income, IncomeCategory incomeCategory)
+        {
+            var incCategory = new IncCategory()
+            {
+                IncomeId = income.Id,
+                IncomeCategoryId = incomeCategory.Id
+            };
+
+            _context.IncCategories.Add(incCategory);
             await _context.SaveChangesAsync();
         }
     }

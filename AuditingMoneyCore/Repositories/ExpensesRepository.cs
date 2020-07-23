@@ -53,13 +53,13 @@ namespace AuditingMoneyCore.Repositories
 
         public async Task Create(Expenses entity)
         {
-            _context.Expenses.Remove(entity);
+            _context.Expenses.Add(entity);
             await _context.SaveChangesAsync();
         }
 
         public async Task Update(Expenses entity)
         {
-            _context.Expenses.Remove(entity);
+            _context.Expenses.Update(entity);
             await _context.SaveChangesAsync();
         }
 

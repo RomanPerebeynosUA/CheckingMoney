@@ -20,18 +20,20 @@ namespace AuditingMoneyAPI.Controllers
     public class CashAccountController : ControllerBase
     {
      
-     //   private readonly IBalanceRepository _balanceRepository;
+        private readonly IBalanceRepository _balanceRepository;
         private readonly ICashAccountRepository _cashAccountRepository;
         private readonly IMapper _mapper;
+
         public CashAccountController(
             ICashAccountRepository cashAccountRepository, 
-            IMapper mapper)
+            IMapper mapper, IBalanceRepository balanceRepository)
         {
+            _balanceRepository = balanceRepository;
             _cashAccountRepository = cashAccountRepository;
             _mapper = mapper;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<IActionResult> Get(int id)
         {         
             if (!_cashAccountRepository.ExistsByBalanceId(id))
@@ -40,7 +42,8 @@ namespace AuditingMoneyAPI.Controllers
             }         
             else
             {
-                var cashAccounts = await _cashAccountRepository.GetListItems(id);
+                //  var cashAccounts = await _cashAccountRepository.GetListItems(id);
+                var cashAccounts = _cashAccountRepository.GetCashAccountsForView(id);
                 return new JsonResult(cashAccounts);
             }
         }
@@ -54,7 +57,8 @@ namespace AuditingMoneyAPI.Controllers
             }
 
             var cash = _mapper.Map<CashAccountJsonModel, CashAccount>(cashJson);
-
+            var balance =  await _balanceRepository.GetItem(cashJson.BalanceId);
+            cash.Balance = balance;
             await _cashAccountRepository.Create(cash);
            
             return Ok();

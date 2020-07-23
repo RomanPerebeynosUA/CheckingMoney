@@ -26,9 +26,5 @@
     <ProjectReference Include="..\AuditingMoneyCore\AuditingMoneyCore.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 
 </Project>

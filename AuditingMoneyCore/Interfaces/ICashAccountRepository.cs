@@ -1,4 +1,5 @@
 ﻿using AuditingMoney.Entity.Domain;
+using AuditingMoney.Entity.JsonModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace AuditingMoneyCore.Interfaces
 
         Task<List<CashAccount>> GetListItems();
         Task<List<CashAccount>> GetListItems(int id);
+        IEnumerable<CashAccountJsonModel> GetCashAccountsForView(int id);
 
         Task<CashAccount> GetItem(int id);
         Task<CashAccount> GetItemByBalanceId(int id);

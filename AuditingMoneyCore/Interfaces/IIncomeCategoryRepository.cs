@@ -15,9 +15,9 @@ namespace AuditingMoneyCore.Interfaces
         Task<IncomeCategory> GetItem(int id);
         Task<IncomeCategory> GetItemByName(string name);
 
-        Task SaveEntity(IncomeCategory entity);
-        Task RemoveEntity(IncomeCategory entity);
-        Task UpdateEntity(IncomeCategory entity);
+        Task Create(IncomeCategory entity);
+        Task Remove(IncomeCategory entity);
+        Task Update(IncomeCategory entity);
 
     }
 }

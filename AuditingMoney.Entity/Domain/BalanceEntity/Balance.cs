@@ -13,6 +13,7 @@ namespace AuditingMoney.Entity.Domain.BalanceEntity
         public string UserId { get; set; }
 
         public DateTime DateCreated { get; set; }
+
         public List<BalanKindOfCurr> BalanKindOfCurrs { get; set; }
         public Balance()
         {

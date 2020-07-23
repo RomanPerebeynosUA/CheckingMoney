@@ -10,12 +10,16 @@ namespace AuditingMoneyCore.Interfaces
    public interface IIncomeRepository
     {
         bool Exists(int id);
+        bool ExistsByCashAccountId(int id);
 
         Task<List<Income>> GetListItems();
+        Task<List<Income>> GetListItems(int id);
         Task<Income> GetItem(int id);
+        Task<Income> GetItemByDate(DateTime dateTime);
 
-        Task SaveEntity(Income entity);
-        Task RemoveEntity(Income entity);
-        Task UpdateEntity(Income entity);
+        Task CreateComunication(Income income, IncomeCategory incomeCategory);
+        Task Create(Income entity);
+        Task Remove(Income entity);
+        Task Update(Income entity);
     }
 }

@@ -12,9 +12,11 @@ namespace AuditingMoneyClient.Models.JsonModels
 
         public double Amount { get; set; }
 
+        public string Currency { get; set; }
+
         public string Note { get; set; }
 
-        public int Balance_Id { get; set; }
+        public int BalanceId { get; set; }
 
 
     }

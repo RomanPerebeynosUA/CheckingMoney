@@ -55,6 +55,7 @@ namespace AuditingMoneyClient.Controllers
 
             var content = await _kindOfCurrencyRepository.
                 GetKindOfCurrency("https://localhost:44382/KindOfCurrency/Get", accessToken);
+
             var balanceViewModel = new BalanceViewModel();
             if (content == "Unauthorized")
             {                
@@ -62,10 +63,13 @@ namespace AuditingMoneyClient.Controllers
             }
             else
             {
-                var kindOfCurrencies = _kindOfCurrencyRepository.DeseralizeKindOfCurrencies(content);
+                var kindOfCurrencies = _kindOfCurrencyRepository.
+                    DeseralizeKindOfCurrencies(content);
                 
-                balanceViewModel.Currencies = from NameOfCurency in kindOfCurrencies
-                                              select new SelectListItem { Text = NameOfCurency.Name, Value = NameOfCurency.Name.ToString() };
+                balanceViewModel.Currencies = 
+                    from NameOfCurency in kindOfCurrencies
+                    select new SelectListItem 
+                    { Text = NameOfCurency.Name, Value = NameOfCurency.Name.ToString() };
 
                 return View(balanceViewModel);
             }
@@ -77,7 +81,8 @@ namespace AuditingMoneyClient.Controllers
             if (ModelState.IsValid)
             {
                 var accessToken = await HttpContext.GetTokenAsync("access_token");
-                BalanceJsonModel balanceJsonModel = _mapper.Map<BalanceViewModel, BalanceJsonModel>(balanceViewModel);
+                BalanceJsonModel balanceJsonModel = _mapper.Map<BalanceViewModel, 
+                    BalanceJsonModel>(balanceViewModel);
              
                 var result = await _balanceRepository.CreateBalance
                     ("https://localhost:44382/Balance/Create", accessToken, balanceJsonModel);
@@ -89,7 +94,13 @@ namespace AuditingMoneyClient.Controllers
             }
             return View(balanceViewModel);
         }
+        [HttpPut]
+        public async Task<IActionResult> Update(BalanceViewModel balanceViewModel)
+        {
 
+            return View(balanceViewModel);
 
+        }
     }
+
 }

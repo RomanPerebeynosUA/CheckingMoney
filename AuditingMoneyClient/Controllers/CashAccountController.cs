@@ -59,8 +59,9 @@ namespace AuditingMoneyClient.Controllers
             if (ModelState.IsValid)
             {
                 var accessToken = await HttpContext.GetTokenAsync("access_token");
-                CashAccountJsonModel cashAccount = _mapper.Map <CashAccountViewModel, CashAccountJsonModel>(cashAccountViewModel);
-                cashAccount.Balance_Id = Id;
+                CashAccountJsonModel cashAccount = _mapper.Map <CashAccountViewModel, 
+                    CashAccountJsonModel>(cashAccountViewModel);
+                cashAccount.BalanceId = Id;
 
                 var result = await _cashAccountRepository.CreateCashAccount(
                     "https://localhost:44382/CashAccount/Create", accessToken, cashAccount);

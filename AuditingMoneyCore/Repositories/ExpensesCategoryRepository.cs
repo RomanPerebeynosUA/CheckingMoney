@@ -37,19 +37,19 @@ namespace AuditingMoneyCore.Repositories
             return await _context.ExpensesCategories.ToListAsync();
         }
 
-        public async Task RemoveEntity(ExpensesCategory entity)
+        public async Task Remove(ExpensesCategory entity)
         {
             _context.ExpensesCategories.Remove(entity);
             await _context.SaveChangesAsync();
         }
 
-        public async Task SaveEntity(ExpensesCategory entity)
+        public async Task Create(ExpensesCategory entity)
         {
             _context.ExpensesCategories.Add(entity);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateEntity(ExpensesCategory entity)
+        public async Task Update(ExpensesCategory entity)
         {
             _context.ExpensesCategories.Update(entity);
             await _context.SaveChangesAsync();

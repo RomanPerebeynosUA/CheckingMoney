@@ -38,21 +38,21 @@ namespace AuditingMoneyCore.Repositories
             return await _context.IncomeCategories.ToListAsync();
         }
 
-        public async Task RemoveEntity(IncomeCategory entity)
+        public async Task Remove(IncomeCategory entity)
         {
             _context.IncomeCategories.Remove(entity);
             await _context.SaveChangesAsync();
         }
 
-        public async Task SaveEntity(IncomeCategory entity)
+        public async Task Create(IncomeCategory entity)
         {
-            _context.IncomeCategories.Remove(entity);
+            _context.IncomeCategories.Add(entity);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateEntity(IncomeCategory entity)
+        public async Task Update(IncomeCategory entity)
         {
-            _context.IncomeCategories.Remove(entity);
+            _context.IncomeCategories.Update(entity);
             await _context.SaveChangesAsync();
         }
     }

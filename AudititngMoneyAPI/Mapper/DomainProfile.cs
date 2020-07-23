@@ -1,6 +1,8 @@
 ﻿using AuditingMoney.Entity.Domain;
 using AuditingMoney.Entity.Domain.BalanceEntity;
 using AuditingMoney.Entity.Domain.ExpensesEntity;
+using AuditingMoney.Entity.Domain.IncomeEntity;
+using AuditingMoney.Entity.Domain.TransferEntity;
 using AuditingMoney.Entity.JsonModels;
 using AutoMapper;
 using System;
@@ -28,6 +30,17 @@ namespace AuditingMoneyAPI.Mapper
 
             CreateMap<ExpensesCategory, ExpensesCategoryJsonModel>();
             CreateMap<ExpensesCategoryJsonModel, ExpensesCategory>();
+
+            CreateMap<Income, IncomeJsonModel>();
+            CreateMap<IncomeJsonModel, Income>();
+
+            CreateMap<IncomeCategory, IncomeCategoryJsonModel>();
+            CreateMap<IncomeCategoryJsonModel, IncomeCategory>();
+
+            CreateMap<Transfer, TransferJsonModel>();
+            CreateMap<TransferJsonModel, Transfer>();
+
+
 
 
 
