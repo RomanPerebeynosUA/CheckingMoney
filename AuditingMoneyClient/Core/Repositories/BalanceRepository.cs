@@ -1,4 +1,5 @@
 ﻿using AuditingMoneyClient.Core.Interfaces;
+using AuditingMoneyClient.Core.Interfaces.Common;
 using AuditingMoneyClient.Models.Balance;
 using AuditingMoneyClient.Models.JsonModels;
 using Newtonsoft.Json;
@@ -14,22 +15,19 @@ namespace AuditingMoneyClient.Core.Repositories
 {
     public class BalanceRepository : IBalanceRepository
     {
-        private readonly IHttpClientFactory _clientFactory;
-
-        public BalanceRepository(IHttpClientFactory clientFactory)
+        private readonly IHttpClientFactoryRepository _clientFactory;
+        public BalanceRepository(IHttpClientFactoryRepository clientFactory)
         {
             _clientFactory = clientFactory;
         }
+
         public async Task<HttpResponseMessage> CreateBalance(string url, string accessToken, BalanceJsonModel content)
-        {
-            var client = _clientFactory.CreateClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            client.DefaultRequestHeaders
-                   .Accept
-                   .Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            var response = await client.PostAsJsonAsync(url, content);       
+        {         
+            var response = await _clientFactory.CreateClient(accessToken).
+                PostAsJsonAsync(url, content);       
             return response.EnsureSuccessStatusCode();
         }
+
         public List<BalanceJsonModel> DeseralizeBalances(string json)
         {
             var balances =  JsonConvert.DeserializeObject<List<BalanceJsonModel>>(json);
@@ -44,10 +42,8 @@ namespace AuditingMoneyClient.Core.Repositories
 
         public async Task<string> GetBalance(string url, string accessToken)
         {
-            var client = _clientFactory.CreateClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-            var response = await client.GetAsync(url);
+            var response = await _clientFactory.
+                CreateClient(accessToken).GetAsync(url);
             if (!response.IsSuccessStatusCode)
             {
                 return null;

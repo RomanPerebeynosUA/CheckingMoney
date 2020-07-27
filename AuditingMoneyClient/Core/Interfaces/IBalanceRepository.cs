@@ -13,5 +13,6 @@ namespace AuditingMoneyClient.Core.Interfaces
         Task<HttpResponseMessage> CreateBalance(string url, string accessToken, BalanceJsonModel content);
         List<BalanceJsonModel> DeseralizeBalances(string json);
         BalanceJsonModel DeseralizeBalance(string json);
+
     }
 }

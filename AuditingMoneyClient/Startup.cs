@@ -4,8 +4,14 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using AuditingMoneyClient.Core.Interfaces;
+using AuditingMoneyClient.Core.Interfaces.Incomes;
+using AuditingMoneyClient.Core.Interfaces.Expenses;
+using AuditingMoneyClient.Core.Interfaces.Common;
 using AuditingMoneyClient.Core.Mapper;
 using AuditingMoneyClient.Core.Repositories;
+using AuditingMoneyClient.Core.Repositories.Incomes;
+using AuditingMoneyClient.Core.Repositories.Expenses;
+using AuditingMoneyClient.Core.Repositories.Common;
 using AuditingMoneyClient.Models.Balance;
 using AuditingMoneyClient.Models.JsonModels;
 using AutoMapper;
@@ -15,6 +21,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
 
 namespace AuditingMoneyClient
 {
@@ -70,9 +77,13 @@ namespace AuditingMoneyClient
             services.AddAutoMapper( 
                 c=> c.AddProfile<DomainProfile>(), typeof(Startup));
 
+            services.AddTransient<IHttpClientFactoryRepository, HttpClientFactoryRepository>();
+         
             services.AddTransient<IBalanceRepository, BalanceRepository>();
             services.AddTransient<ICashAccountRepository, CashAccountRepository>();
             services.AddTransient<IKindOfCurrencyRepository, KindOfCurrencyRepository>();
+            services.AddTransient<IIncomeRepository, IncomeRepository>();
+            services.AddTransient<IExpensesRepository, ExpensesRepository>();
 
         }
 

@@ -1,4 +1,4 @@
-﻿using AuditingMoneyClient.Core.Interfaces;
+﻿using AuditingMoneyClient.Core.Interfaces.Expenses;
 using AuditingMoneyClient.Core.Interfaces.Common;
 using AuditingMoneyClient.Models.JsonModels;
 using Newtonsoft.Json;
@@ -10,43 +10,42 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
-namespace AuditingMoneyClient.Core.Repositories
+namespace AuditingMoneyClient.Core.Repositories.Expenses
 {
-    public class KindOfCurrencyRepository : IKindOfCurrencyRepository
+    public class ExpensesRepository : IExpensesRepository
     {
         private readonly IHttpClientFactoryRepository _clientFactory;
-        public KindOfCurrencyRepository(IHttpClientFactoryRepository clientFactory)
+        public ExpensesRepository(IHttpClientFactoryRepository clientFactory)
         {
             _clientFactory = clientFactory;
         }
 
-        public async Task<HttpResponseMessage> CreateKindOfCurrency(string url, string accessToken, 
-            KindOfCurrencyJsonModel content)
+        public async Task<HttpResponseMessage> CreateExpens(string url, 
+            string accessToken, ExpensesJsonModel content)
         {
             var response = await _clientFactory.CreateClient(accessToken)
                 .PostAsJsonAsync(url, content);
             return response.EnsureSuccessStatusCode();
         }
 
-        public List<KindOfCurrencyJsonModel> DeseralizeKindOfCurrencies(string json)
+        public List<ExpensesJsonModel> DeseralizeExpenses(string json)
         {
-            var kindOfCurrencies = JsonConvert.DeserializeObject<List<KindOfCurrencyJsonModel>>(json);
-            return kindOfCurrencies;
+            var expenses = JsonConvert.DeserializeObject<List<ExpensesJsonModel>>(json);
+            return expenses;
         }
 
-        public KindOfCurrencyJsonModel DeseralizeKindOfCurrency(string json)
+        public ExpensesJsonModel DeseralizeExpens(string json)
         {
-            var kindOfCurrency = JsonConvert.DeserializeObject<KindOfCurrencyJsonModel>(json);
-            return kindOfCurrency;
+            var expens = JsonConvert.DeserializeObject<ExpensesJsonModel>(json);
+            return expens;
         }
 
-        public async Task<string> GetKindOfCurrency(string url, string accessToken)
+        public async Task<string> GetExpenses(string url, string accessToken)
         {
             var response = await _clientFactory.CreateClient(accessToken).GetAsync(url);
-
             if (!response.IsSuccessStatusCode)
             {
-                return response.StatusCode.ToString();
+                return null;
             }
             var result = await response.Content.ReadAsStringAsync();
             return result;

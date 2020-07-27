@@ -28,6 +28,11 @@
     <ProjectReference Include="..\IdentityServer\IdentityServer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Core\Interfaces\Transfers\" />
+    <Folder Include="Core\Repositories\Transfers\" />
+  </ItemGroup>
+
 
 
 </Project>
