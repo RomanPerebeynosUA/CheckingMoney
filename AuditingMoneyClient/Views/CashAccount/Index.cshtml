@@ -25,27 +25,30 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
 
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Currency)
-                </td>
-                @*<td>
-                        <a asp-controller="Balance" asp-action="Index" asp-route-id="@item.UserId">Переглянути баланс</a>
-                    </td>*@
-                @*<td>
-                        <a asp-controller="CashAccount" asp-action="Create" asp-route-id="@item.Id">Додати рахунок</a>
-                    </td>
-                    <td>
-                        <a asp-controller="CashAccount" asp-action="Index" asp-route-id="@item.Id">Переглянути рахунок</a>
-                    </td>*@
-            </tr>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Currency)
+            </td>
+            <td>
+                <a asp-controller="Income" asp-action="Index" asp-route-id="@item.Id">Переглянути історію поповнень</a>
+            </td>
+            <td>
+                <a asp-controller="Expenses" asp-action="Index" asp-route-id="@item.Id">Переглянути історію витрат</a>
+            </td>
+            @*<td>
+            <a asp-controller="CashAccount" asp-action="Create" asp-route-id="@item.Id">Додати рахунок</a>
+        </td>
+        <td>
+            <a asp-controller="CashAccount" asp-action="Index" asp-route-id="@item.Id">Переглянути рахунок</a>
+        </td>*@
+        </tr>
         }
     </tbody>
 </table>

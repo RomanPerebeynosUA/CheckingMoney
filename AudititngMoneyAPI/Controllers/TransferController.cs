@@ -40,7 +40,7 @@ namespace AuditingMoneyAPI.Controllers
                 return new JsonResult(transfers);
             }
         }
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<IActionResult> GetTransferFrom(int id)
         {
             var transfers = await _transferRepository.GetListItemsRemittanceFrom(id);
@@ -54,7 +54,7 @@ namespace AuditingMoneyAPI.Controllers
                 return new JsonResult(transfers);
             }
         }
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<IActionResult> GetTransferTo(int id)
         {
             var transfers = await _transferRepository.GetListItemsRemittanceTo(id);
@@ -104,7 +104,7 @@ namespace AuditingMoneyAPI.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             Transfer transfer = await _transferRepository.GetItem(id);

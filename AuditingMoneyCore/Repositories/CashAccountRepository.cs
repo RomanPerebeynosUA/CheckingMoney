@@ -53,15 +53,15 @@ namespace AuditingMoneyCore.Repositories
         public async Task Remove(CashAccount entity)
         {
             _context.CashAccounts.Remove(entity);
-             await UpdateBalance(entity, true);
+             await UpdateBalance(entity, false);
             await _context.SaveChangesAsync();
         }
 
         public async Task Create(CashAccount entity)
         {
             _context.CashAccounts.Add(entity);
-            await UpdateBalance(entity, true);
             await _context.SaveChangesAsync();
+            await UpdateBalance(entity, true);
         }
 
         public async Task Update(CashAccount entity)
@@ -83,7 +83,9 @@ namespace AuditingMoneyCore.Repositories
                 balance.Amount -= entity.Amount;
             }
             _context.Balances.Update(balance);
+            await _context.SaveChangesAsync();
         }
+
         public IEnumerable<CashAccountJsonModel> GetCashAccountsForView(int id)
         {
             List<CashAccountJsonModel> jsonModels = new List<CashAccountJsonModel>();

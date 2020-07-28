@@ -50,7 +50,8 @@ namespace AuditingMoneyClient.Controllers
        
         [HttpGet]
         public IActionResult Create()
-        { 
+        {
+           
             return View();
         }
         [HttpPost]
@@ -61,7 +62,9 @@ namespace AuditingMoneyClient.Controllers
                 var accessToken = await HttpContext.GetTokenAsync("access_token");
                 CashAccountJsonModel cashAccount = _mapper.Map <CashAccountViewModel, 
                     CashAccountJsonModel>(cashAccountViewModel);
+
                 cashAccount.BalanceId = Id;
+                cashAccount.Id = 0; 
 
                 var result = await _cashAccountRepository.CreateCashAccount(
                     "https://localhost:44382/CashAccount/Create", accessToken, cashAccount);

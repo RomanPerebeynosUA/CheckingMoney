@@ -15,5 +15,7 @@ namespace AuditingMoneyClient.Models.JsonModels
         public string Note { get; set; }
 
         public DateTime Date { get; set; }
+
+        public int CashAccount_Id { get; set; }
     }
 }

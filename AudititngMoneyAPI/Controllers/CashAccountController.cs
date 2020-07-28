@@ -55,7 +55,7 @@ namespace AuditingMoneyAPI.Controllers
             {     
                 return BadRequest();            
             }
-
+            
             var cash = _mapper.Map<CashAccountJsonModel, CashAccount>(cashJson);
             var balance =  await _balanceRepository.GetItem(cashJson.BalanceId);
             cash.Balance = balance;
@@ -78,7 +78,7 @@ namespace AuditingMoneyAPI.Controllers
             await _cashAccountRepository.Update(cashAccount);
             return Ok();
         }
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             CashAccount cashAccount = await _cashAccountRepository.GetItem(id);

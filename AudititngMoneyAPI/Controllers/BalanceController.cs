@@ -80,7 +80,7 @@ namespace AuditingMoneyAPI.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             Balance balance = await _balanceRepository.GetItem(id);

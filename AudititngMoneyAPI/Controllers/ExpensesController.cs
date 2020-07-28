@@ -32,7 +32,7 @@ namespace AuditingMoneyAPI.Controllers
             _expensesCategoryRepository = expensesCategoryRepository;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<IActionResult> Get(int id)
         {
             if (!_expensesRepository.ExistsByCashAccountId(id))
@@ -41,7 +41,7 @@ namespace AuditingMoneyAPI.Controllers
             }
             else
             {
-                var expenses = await _expensesRepository.GetListItems(id);
+                var expenses = _expensesRepository.GetExpensesForView(id);
                 return new JsonResult(expenses);
             }
         }
@@ -56,8 +56,9 @@ namespace AuditingMoneyAPI.Controllers
             var expensesCategory = await _expensesCategoryRepository.GetItemByName(expensesJson.Category);
 
             var expenses = _mapper.Map<ExpensesJsonModel, Expenses>(expensesJson);
-   
-            await _expensesRepository.Create(expenses);
+            expenses.Date = DateTime.Now;
+
+            await _expensesRepository.Create(expenses, expensesJson.CashAccount_Id);
 
             await _expensesRepository.CreateComunication(
                await _expensesRepository.GetItemByDate(expenses.Date), expensesCategory);
@@ -80,7 +81,7 @@ namespace AuditingMoneyAPI.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             Expenses expenses = await _expensesRepository.GetItem(id);

@@ -8,7 +8,7 @@ namespace AuditingMoneyClient.Models.Balance
 {
     public class CashAccountViewModel
     {
-        //    public int Id { get; set; }
+        public int Id { get; set; }
 
         [Display(Name = "Рахунок")]
         public string Name { get; set; }

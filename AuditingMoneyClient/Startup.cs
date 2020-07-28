@@ -80,10 +80,15 @@ namespace AuditingMoneyClient
             services.AddTransient<IHttpClientFactoryRepository, HttpClientFactoryRepository>();
          
             services.AddTransient<IBalanceRepository, BalanceRepository>();
-            services.AddTransient<ICashAccountRepository, CashAccountRepository>();
             services.AddTransient<IKindOfCurrencyRepository, KindOfCurrencyRepository>();
+
+            services.AddTransient<ICashAccountRepository, CashAccountRepository>();
+
             services.AddTransient<IIncomeRepository, IncomeRepository>();
+            services.AddTransient<IIncomeCategoryRepository, IncomeCategoryRepository>();
+
             services.AddTransient<IExpensesRepository, ExpensesRepository>();
+            services.AddTransient<IExpensesCategoryRepository, ExpensesCategoryRepository>();
 
         }
 

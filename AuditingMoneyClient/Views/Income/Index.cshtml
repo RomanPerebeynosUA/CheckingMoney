@@ -1,0 +1,53 @@
+﻿@model IEnumerable<AuditingMoneyClient.Models.Balance.IncomeViewModel>
+@{
+    ViewData["Title"] = "Історія витрат";
+}
+    <a asp-controller="Income" asp-action="Create">Поповнити рахунок </a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Note)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Note)
+            </td>
+            @*<td>
+                <a asp-controller="CashAccount" asp-action="Create" asp-route-id="@item.Id">Створити рахунок</a>
+            </td>
+            <td>
+                <a asp-controller="CashAccount" asp-action="Index" asp-route-id="@item.Id">Переглянути рахунки</a>
+            </td>*@
+        </tr>
+        }
+    </tbody>
+</table>
+<div>
+    <a  asp-controller="Balance" asp-action="Index">Назад</a>
+</div>

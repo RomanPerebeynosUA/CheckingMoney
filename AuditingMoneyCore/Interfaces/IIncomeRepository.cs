@@ -1,4 +1,5 @@
 ﻿using AuditingMoney.Entity.Domain.IncomeEntity;
+using AuditingMoney.Entity.JsonModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace AuditingMoneyCore.Interfaces
 {
    public interface IIncomeRepository
     {
+        public IEnumerable<IncomeJsonModel> GetIncomesForView(int id);
         bool Exists(int id);
         bool ExistsByCashAccountId(int id);
 
@@ -18,7 +20,7 @@ namespace AuditingMoneyCore.Interfaces
         Task<Income> GetItemByDate(DateTime dateTime);
 
         Task CreateComunication(Income income, IncomeCategory incomeCategory);
-        Task Create(Income entity);
+        Task Create(Income entity, int cashAccountId);
         Task Remove(Income entity);
         Task Update(Income entity);
     }

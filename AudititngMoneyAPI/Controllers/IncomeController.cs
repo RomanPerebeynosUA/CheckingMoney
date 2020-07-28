@@ -30,7 +30,7 @@ namespace AuditingMoneyAPI.Controllers
             _incomeCategoryRepository = incomeCategoryRepository;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<IActionResult> Get(int id)
         {
             if (!_incomeRepository.ExistsByCashAccountId(id))
@@ -39,7 +39,7 @@ namespace AuditingMoneyAPI.Controllers
             }
             else
             {
-                var incomes = await _incomeRepository.GetListItems(id);
+                var incomes =  _incomeRepository.GetIncomesForView(id);
                 return new JsonResult(incomes);
             }
         }
@@ -55,8 +55,9 @@ namespace AuditingMoneyAPI.Controllers
             var incomeCategory = await _incomeCategoryRepository.GetItemByName(incomeJson.Category);
 
             var income = _mapper.Map<IncomeJsonModel, Income>(incomeJson);
+            income.Date = DateTime.Now;
 
-            await _incomeRepository.Create(income);
+            await _incomeRepository.Create(income, incomeJson.CashAccount_Id);
 
             await _incomeRepository.CreateComunication(
                await _incomeRepository.GetItemByDate(income.Date), incomeCategory);
@@ -79,7 +80,7 @@ namespace AuditingMoneyAPI.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             Income income = await _incomeRepository.GetItem(id);
