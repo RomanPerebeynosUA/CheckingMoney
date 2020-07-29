@@ -47,6 +47,32 @@ namespace AuditingMoneyAPI.Controllers
                 return new JsonResult(cashAccounts);
             }
         }
+        [HttpGet]
+        public IActionResult GetAccountHistory(int id)
+        {
+            if (!_cashAccountRepository.Exists(id))
+            {
+                return null;
+            }
+            else
+            {
+                var history = _cashAccountRepository.GetCashAccountHistory(id);
+                return new JsonResult(history);
+            }
+        }
+        [HttpGet]
+        public IActionResult GetNames(int id)
+        {
+            if (!_cashAccountRepository.Exists(id))
+            {
+                return null;
+            }
+            else
+            {
+                var history = _cashAccountRepository.GetCashAccountNames(id);
+                return new JsonResult(history);
+            }
+        }
 
         [HttpPost]
         public async Task<ActionResult<CashAccountJsonModel>> Create(CashAccountJsonModel cashJson)

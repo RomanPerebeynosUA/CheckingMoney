@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AuditingMoneyClient.Core.Interfaces;
 using AuditingMoneyClient.Models.Balance;
 using AuditingMoneyClient.Models.JsonModels;
+using AuditingMoneyClient.Models.Statistics;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
@@ -47,7 +48,28 @@ namespace AuditingMoneyClient.Controllers
                 return View(CashAccountViewModels);
             }
         }
-       
+        public async Task<IActionResult> History(int Id)
+        {
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+
+            var content = await _cashAccountRepository.GetCashAccount(
+                "https://localhost:44382/CashAccount/GetAccountHistory?id=" + Id.ToString(), accessToken);
+
+            List<CashAccountHistoryViewModel> historyView = new List<CashAccountHistoryViewModel>();
+            if (content == null)
+            {
+                return View(historyView);
+            }
+            else
+            {
+                var cashAccountHistory = _cashAccountRepository.DeseralizeCashAccountHistory(content);
+
+                historyView = _mapper.Map<List<CashAccountHistory>,
+                    List<CashAccountHistoryViewModel>>(cashAccountHistory);
+
+                return View(historyView);
+            }
+        } 
         [HttpGet]
         public IActionResult Create()
         {

@@ -1,5 +1,6 @@
 ﻿using AuditingMoney.Entity.Domain;
 using AuditingMoney.Entity.JsonModels;
+using AuditingMoney.Entity.JsonModels.Statistics;
 using AuditingMoneyCore.Data;
 using AuditingMoneyCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -120,6 +121,71 @@ namespace AuditingMoneyCore.Repositories
             }
             return jsonModels;
         }
+        public IEnumerable<CashAccountHistory> GetCashAccountHistory(int id)
+        {
+            List<CashAccountHistory> cashAccountHistory = new List<CashAccountHistory>();
 
+            var incomes = from i in _context.Incomes
+                          join inc in _context.IncCategories on i.Id equals inc.IncomeId
+                          join c in _context.IncomeCategories on inc.IncomeCategoryId equals c.Id
+                          where (i.CashAccount.Id == id)
+                          select new
+                          {
+                              Amount = i.Amount,
+                              Category = c.Name,
+                              Note = i.Note,
+                              Date = i.Date,
+                              CashAccount_Id = i.CashAccount.Id
+                          };
+
+            var expenses = from e in _context.Expenses
+                           join enc in _context.ExpCategories on e.Id equals enc.ExpensesId
+                           join c in _context.ExpensesCategories on enc.ExpensesCategoryId equals c.Id
+                           where (e.CashAccount.Id == id)
+                           select new
+                           {
+                               Amount = e.Amount,
+                               Category = c.Name,
+                               Note = e.Note,
+                               Date = e.Date,
+                               CashAccount_Id = e.CashAccount.Id
+                           };
+
+            foreach (var i in incomes)
+            {
+                var historyItem = new CashAccountHistory()
+                {
+                    Change = true,
+                    Amount = i.Amount,
+                    Category = i.Category,
+                    Note = i.Note,
+                    Date = i.Date,
+                    CashAccount_Id = i.CashAccount_Id
+                };
+                cashAccountHistory.Add(historyItem);
+            }
+
+            foreach (var i in expenses)
+            {
+                var historyItem = new CashAccountHistory()
+                {
+                    Change = false,
+                    Amount = i.Amount,
+                    Category = i.Category,
+                    Note = i.Note,
+                    Date = i.Date,
+                    CashAccount_Id = i.CashAccount_Id
+                };
+                cashAccountHistory.Add(historyItem);
+            }
+            cashAccountHistory.OrderBy(e => e.Date);
+
+            return cashAccountHistory;
+        }
+
+        public Task<List<CashAccount>> GetCashAccountNames(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

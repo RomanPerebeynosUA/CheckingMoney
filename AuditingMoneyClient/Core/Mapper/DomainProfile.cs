@@ -1,5 +1,6 @@
 ﻿using AuditingMoneyClient.Models.Balance;
 using AuditingMoneyClient.Models.JsonModels;
+using AuditingMoneyClient.Models.Statistics;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,12 @@ namespace AuditingMoneyClient.Core.Mapper
 
             CreateMap<IncomeViewModel, IncomeJsonModel>();
             CreateMap<IncomeJsonModel, IncomeViewModel>();
+
+            CreateMap<CashAccountHistoryViewModel, CashAccountHistory>();
+            CreateMap<CashAccountHistory, CashAccountHistoryViewModel>();
+
+            CreateMap<TransferViewModel, TransferJsonModel>();
+            CreateMap<TransferJsonModel, TransferViewModel>();
 
         }
     }

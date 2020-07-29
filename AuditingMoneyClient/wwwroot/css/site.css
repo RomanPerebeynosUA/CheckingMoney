@@ -12,6 +12,13 @@ a {
   color: #0366d6;
 }
 
+.b1 {
+    color: #47D63E; /*green*/
+}
+.b2 {
+    color: #FF0000; /*red*/
+}
+
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;

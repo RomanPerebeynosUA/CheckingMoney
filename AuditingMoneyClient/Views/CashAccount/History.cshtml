@@ -1,0 +1,79 @@
+﻿@model IEnumerable<AuditingMoneyClient.Models.Statistics.CashAccountHistoryViewModel>
+<
+@{
+    ViewData["Title"] = "Історія рахунку";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Icon)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Note)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (item.Change == true)
+            {
+                item.Icon = "+";
+        <tr class="b1">
+            <td>
+                @Html.DisplayFor(modelItem => item.Icon)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Note)
+            </td>
+        </tr>
+            }
+            else
+            {
+                 item.Icon = "-";
+                <tr class="b2">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Icon)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Note)
+                    </td>
+                </tr>
+            }
+
+        }
+    </tbody>
+</table>
+<div>
+    <a asp-controller="CashAccount" asp-action="Index">Назад</a>
+</div>

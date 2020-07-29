@@ -2,6 +2,7 @@
 using AuditingMoneyClient.Core.Interfaces.Common;
 using AuditingMoneyClient.Models.Balance;
 using AuditingMoneyClient.Models.JsonModels;
+using AuditingMoneyClient.Models.Statistics;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,13 @@ namespace AuditingMoneyClient.Core.Repositories
             return cashAccount;
         }
 
+        public List<CashAccountHistory> DeseralizeCashAccountHistory(string json)
+        {
+            var cashAccountHistory = JsonConvert.DeserializeObject<List<CashAccountHistory>>(json);
+
+            return cashAccountHistory;
+        }
+
         public List<CashAccountJsonModel> DeseralizeCashAccounts(string json)
         {
             var cashAccounts = JsonConvert.DeserializeObject<List<CashAccountJsonModel>>(json);
@@ -52,6 +60,27 @@ namespace AuditingMoneyClient.Core.Repositories
             }
             var result = await response.Content.ReadAsStringAsync();
             return result;
+        }
+        public async Task<List<CashAccountJsonModel>> GetNames(string url, string accessToken)
+        {
+         
+            var response = await _clientFactory.CreateClient(accessToken).GetAsync(url);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            var result = await response.Content.ReadAsStringAsync();
+
+            if (result == null)
+            {
+                return null;
+            }
+
+            var cashAccounts = JsonConvert.DeserializeObject<List<CashAccountJsonModel>>(result);
+          
+            return cashAccounts;
         }
     }
 }

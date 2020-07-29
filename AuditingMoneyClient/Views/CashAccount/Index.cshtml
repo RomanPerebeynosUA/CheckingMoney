@@ -42,6 +42,9 @@
             <td>
                 <a asp-controller="Expenses" asp-action="Index" asp-route-id="@item.Id">Переглянути історію витрат</a>
             </td>
+            <td>
+                <a asp-controller="CashAccount" asp-action="History" asp-route-id="@item.Id">Переглянути історію</a>
+            </td>
             @*<td>
             <a asp-controller="CashAccount" asp-action="Create" asp-route-id="@item.Id">Додати рахунок</a>
         </td>
