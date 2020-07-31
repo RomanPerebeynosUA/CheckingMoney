@@ -69,8 +69,8 @@ namespace AuditingMoneyAPI.Controllers
             }
             else
             {
-                var history = _cashAccountRepository.GetCashAccountNames(id);
-                return new JsonResult(history);
+                var cashAccounts = _cashAccountRepository.GetCashAccountNames(id);
+                return new JsonResult(cashAccounts);
             }
         }
 

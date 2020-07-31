@@ -21,7 +21,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using AuditingMoneyClient.Core.Interfaces.Transfers;
+using AuditingMoneyClient.Core.Repositories.Transfers;
 
 namespace AuditingMoneyClient
 {
@@ -89,6 +90,8 @@ namespace AuditingMoneyClient
 
             services.AddTransient<IExpensesRepository, ExpensesRepository>();
             services.AddTransient<IExpensesCategoryRepository, ExpensesCategoryRepository>();
+
+            services.AddTransient<ITransferRepository, TransferRepository>();
 
         }
 

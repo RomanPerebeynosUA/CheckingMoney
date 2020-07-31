@@ -24,11 +24,15 @@ namespace AuditingMoneyClient.Core.Repositories.Transfers
             _clientFactory = clientFactory;
         }
 
-        public async Task<HttpResponseMessage> CreateTransfer(string url, string accessToken, 
-            TransferJsonModel content)
+        public async Task<HttpResponseMessage> CreateTransfer(string url, string accessToken,
+            TransferViewModel content)
         {
+            TransferJsonModel transfer = _mapper.Map<TransferViewModel,
+               TransferJsonModel>(content);
+
             var response = await _clientFactory.CreateClient(accessToken)
-            .PostAsJsonAsync(url, content);
+            .PostAsJsonAsync(url, transfer);
+
             return response.EnsureSuccessStatusCode();
         }
 
@@ -70,8 +74,8 @@ namespace AuditingMoneyClient.Core.Repositories.Transfers
             {
                 return transfersViewModel;
             }
+            var transfers = DeseralizeTransfers(result);
 
-            var transfers = JsonConvert.DeserializeObject<List<TransferJsonModel>>(result);
             transfersViewModel = _mapper.Map<List<TransferJsonModel>,
                 List<TransferViewModel>>(transfers);
 

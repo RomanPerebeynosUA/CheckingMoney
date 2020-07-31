@@ -183,9 +183,16 @@ namespace AuditingMoneyCore.Repositories
             return cashAccountHistory;
         }
 
-        public Task<List<CashAccount>> GetCashAccountNames(int id)
+        public async Task<List<CashAccount>> GetCashAccountNames(int id)
         {
-            throw new NotImplementedException();
+            //var cashAccount = await _context.CashAccounts.FirstOrDefaultAsync(e => e.Id == id);
+
+            //var balance =  await _context.Balances.FirstOrDefaultAsync
+            //    (e => e.Id == cashAccount.Balance.Id);
+
+            var cashAccounts  = await _context.CashAccounts.Where(e => e.Balance.Id == 1).ToListAsync();
+
+            return cashAccounts;
         }
     }
 }

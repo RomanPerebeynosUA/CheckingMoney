@@ -12,7 +12,7 @@ namespace AuditingMoneyClient.Core.Interfaces.Transfers
     {
         Task<string> GetTransfer(string url, string accessToken);
         Task<List<TransferViewModel>> Get(string url, string accessToken);
-        Task<HttpResponseMessage> CreateTransfer(string url, string accessToken, TransferJsonModel content);
+        Task<HttpResponseMessage> CreateTransfer(string url, string accessToken, TransferViewModel content);
         List<TransferJsonModel> DeseralizeTransfers(string json);
         TransferJsonModel DeseralizeTransfer(string json);
     }

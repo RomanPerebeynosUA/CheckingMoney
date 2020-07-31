@@ -56,15 +56,18 @@ namespace AuditingMoneyClient.Controllers
 
             if (content == null)
             {
-                return RedirectToAction("Index", "CashAccount");
+                return RedirectToAction("Index", "Balance");
             }
             else
             {
-
                 transferView.Accounts =
                     from NameOfAccount in content
                     select new SelectListItem
                     { Text = NameOfAccount.Name, Value = NameOfAccount.Name.ToString() };
+
+                transferView.CashAccountFrom_Id = Id;
+                transferView.CashAccountTo_Id = content.FirstOrDefault
+                    (e => e.Name == transferView.Name).Id;
 
                 return View(transferView);
             }
@@ -74,13 +77,10 @@ namespace AuditingMoneyClient.Controllers
         {
             if (ModelState.IsValid)
             {
-                var accessToken = await HttpContext.GetTokenAsync("access_token");
-
-                TransferJsonModel transfer = _mapper.Map<TransferViewModel,
-                    TransferJsonModel>(transferViewModel);
+                var accessToken = await HttpContext.GetTokenAsync("access_token");           
 
                 var result = await _transferRepository.CreateTransfer(
-                    "https://localhost:44382/Income/Create", accessToken, transfer);
+                    "https://localhost:44382/Income/Create", accessToken, transferViewModel);
 
                 if (result.IsSuccessStatusCode)
                 {

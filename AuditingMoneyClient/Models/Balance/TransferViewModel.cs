@@ -14,6 +14,12 @@ namespace AuditingMoneyClient.Models.Balance
         [Display(Name = "Кількість")]
         public double Amount { get; set; }
 
+        [Display(Name = "Переказ в акаунт")]
+        public string Name { get; set; }
+
+        [Display(Name = "Переказ з акаунта")]
+        public string NameFrom { get; set; }
+
         [Display(Name = "Дата")]
         public DateTime Date { get; set; }
 
@@ -21,5 +27,10 @@ namespace AuditingMoneyClient.Models.Balance
         public string Note { get; set; }
 
         public IEnumerable<SelectListItem> Accounts { get; set; }
+
+        public int CashAccountFrom_Id { get; set; }
+
+        public int CashAccountTo_Id { get; set; }
+
     }
 }
